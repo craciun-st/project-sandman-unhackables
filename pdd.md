@@ -26,7 +26,12 @@ is envisioned as an application that allows for time-management/planning and whi
    behaviours that go against the main goals of such an app 
    (e.g. cutting corners when completing tasks, dishonest timekeeping)<br>
    <br>
+   
+   1.1.2. **Solves a part of the motivation paradigm - in completion to the virtual rewards system**
 
+   There is a system of special quests that  user can participate in order to achieve real rewards (i.e. vouchers, prizes).<br>
+   <br>
+   
     1.2. **Solve management/prioritization problems:**
    
     The Product should also solve for the user the problem of creation of a hierarchy of priorities and summarize 
