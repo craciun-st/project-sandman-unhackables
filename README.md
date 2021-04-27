@@ -1,4 +1,4 @@
-# El Proyecte Grande - Design
+# Project Sandman - Design
 
 ## Story
 
@@ -13,7 +13,7 @@ This project is meant to last until the end of the course. While Codecool will n
 during each sprint,you and your team are expected to make incremental changes in a Scrum way, developing the project further and further,
 adding new features, technologies, etc.
 
-***¡Comience El Proyecte Grande!***
+***Good luck!***
 
 ## What are you going to learn?
 
