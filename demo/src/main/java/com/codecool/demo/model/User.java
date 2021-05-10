@@ -1,4 +1,4 @@
-package com.codecool.demo;
+package com.codecool.demo.model;
 
 import java.util.ArrayList;
 import java.util.List;

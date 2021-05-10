@@ -1,4 +1,4 @@
-package com.codecool.demo;
+package com.codecool.demo.model;
 
 public abstract class BaseModel {
     private int id;

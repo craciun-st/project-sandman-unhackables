@@ -1,11 +1,21 @@
-package com.codecool.demo;
+package com.codecool.demo.dao;
 
+import com.codecool.demo.model.Task;
+import com.codecool.demo.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Component
-public class UserSupplier {
+public class MockUserSupplier {
+    private List<User> users = new ArrayList<>();
+
+    public MockUserSupplier() {
+        initMockUsers();
+    }
+
     public User getMockUser(int id) {
         User someUser = new User(id, "User "+id);
         Random randomizer = new Random();
@@ -15,6 +25,26 @@ public class UserSupplier {
             );
         }
         return someUser;
+    }
+
+    public void initMockUsers() {
+        for (int i = 0; i < 10; i++) {
+            users.add(getMockUser(i));
+        }
+    }
+
+    public User getUser(int id) {
+        if (id >= 0 && id < this.users.size()) {
+            return users.get(id);
+        }
+        else {
+            return getMockUser(id);
+        }
+    }
+
+    public List<User> getAll() {
+
+        return new ArrayList<>(users);
     }
 
     public Task getRandomTask(int index) {
