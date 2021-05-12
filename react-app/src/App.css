@@ -49,3 +49,21 @@
   color: blue;
   font-weight: bold;
 }
+
+.col-md-5 {
+  margin-top: 100px !important;
+  
+}
+.table {
+  margin-top: 10px !important;
+}
+
+input {
+  border: 1px solid black !important;
+  display: inline !important;
+  width: 70% !important;
+}
+
+button {
+  margin-left: 20px !important;
+}
