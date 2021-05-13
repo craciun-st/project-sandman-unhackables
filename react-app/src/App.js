@@ -5,19 +5,23 @@ import {useState} from 'react';
 var taskData = [
   {
       "id": 1411077732,
-      "name": "Assignments"
+      "name": "Assignments",
+      "done": true
   },
   {
       "id": 507317033,
-      "name": "Sports"
+      "name": "Sports",
+      "done": false
   },
   {
       "id": 1219644257,
-      "name": "Assignments"
+      "name": "Assignments",
+      "done": true
   },
   {
       "id": 1045836344,
-      "name": "General"
+      "name": "General",
+      "done": false
   }
 ];
 const userId = 1;
@@ -33,7 +37,7 @@ function App() {
 
   function addTask() {
     let newList = [...taskList];
-    newList.push({"name": taskName});
+    newList.push({"name": taskName, "done": false});
     setTaskList(newList);
   }
 
@@ -41,6 +45,17 @@ function App() {
     var duplicateArray = [...taskList];
     duplicateArray.splice(index,1);
     setTaskList(duplicateArray);
+  }
+
+  function handleCheckBoxClick(event) {
+    let checkedState = event.target.checked;
+
+    let idString = `${event.target.id}`.slice(6);
+    let idAsInt = parseInt(idString);
+    var newArray = [...taskList];
+    newArray[idAsInt].done = checkedState;
+    setTaskList(newArray);
+    // console.log(newArray[idAsInt]);  // for debug purposes
   }
   
 
@@ -65,6 +80,9 @@ function App() {
               {taskList.map(
                 (task, index) => (
                   <tr key={index}>
+                    <td>                      
+                      <input type="checkbox" id={`check-${index}`} onChange={handleCheckBoxClick} checked={task.done}></input>
+                    </td>
                     <td>{index+1}</td>
                     <td>{task.name}</td>
                     <td><i class="far fa-trash-alt" onClick={() => deleteTask(index)}></i></td>
