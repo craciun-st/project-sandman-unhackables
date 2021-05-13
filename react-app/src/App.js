@@ -1,7 +1,14 @@
 import './App.css';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css'
-import React, {useState} from 'react';
 
+import React, {useState} from 'react';
+import {  
+  BrowserRouter as Router,
+  Route,
+  Switch  
+} from "react-router-dom";
+
+import ProfilePage from "./ProfilePage";
 
 
 var taskData = [
@@ -102,21 +109,33 @@ function App() {
   }
 
 
-  return (
+  return (    
     <div className="App">
-      <LoginContainer></LoginContainer>
-      <div className="row justify-content-center">
-        <div className="col-md-5">
-          
-          <input type="text" placeholder="Enter task..." className="form-control" 
-          value={taskName} onChange={updateTaskName}
-          />
-          <button className="btn btn-primary" onClick={addTask}>ADD</button>
+      <Router>
+        <Switch>
+          <Route exact path="/" >
 
-          <TaskTable></TaskTable>
-          
-        </div>
-      </div>
+            {/* === INDEX PAGE === */}
+            <LoginContainer></LoginContainer>
+            <div className="row justify-content-center">
+              <div className="col-md-5">
+                
+                <input type="text" placeholder="Enter task..." className="form-control" 
+                value={taskName} onChange={updateTaskName}
+                />
+                <button className="btn btn-primary" onClick={addTask}>ADD</button>
+
+                <TaskTable></TaskTable>
+                
+              </div>
+            </div>
+            {/* === END OF INDEX PAGE === */}
+
+            </Route>
+
+          <Route path="/profile"><ProfilePage /></Route>
+        </Switch>
+      </Router>
     </div>
   );
 
