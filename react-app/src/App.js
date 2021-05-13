@@ -1,6 +1,8 @@
 import './App.css';
 import bootstrap from '../node_modules/bootstrap/dist/css/bootstrap.css'
-import {useState} from 'react';
+import React, {useState} from 'react';
+
+
 
 var taskData = [
   {
@@ -39,12 +41,17 @@ function App() {
     let newList = [...taskList];
     newList.push({"name": taskName, "done": false});
     setTaskList(newList);
+    setTaskName('');
   }
 
   function deleteTask(index) {
     var duplicateArray = [...taskList];
     duplicateArray.splice(index,1);
     setTaskList(duplicateArray);
+  }
+
+  function updateTaskName(event) {
+    setTaskName(event.target.value)
   }
 
   function handleCheckBoxClick(event) {
@@ -59,38 +66,55 @@ function App() {
   }
   
 
-
-  return (
-    <div className="App">
-      <div className="login-container">
+  class LoginContainer extends React.Component {
+    render() {
+      return(
+        <div className="login-container">
         You are logged in as <span className="user-name">
           {userName}
           </span>
       </div>
+      )
+    }
+  }
+
+  class TaskTable extends React.Component {
+    render() {
+      return(
+        <table className="table table-success table-striped">
+          <tbody>
+            {taskList.map(
+              (task, index) => (
+                <tr key={index}>
+                  <td>                      
+                    <input type="checkbox" id={`check-${index}`} onChange={handleCheckBoxClick} checked={task.done}></input>
+                  </td>
+                  <td>{index+1}</td>
+                  <td>{task.name}</td>
+                  <td><i class="far fa-trash-alt" onClick={() => deleteTask(index)}></i></td>
+                </tr>
+              )
+            )}
+          </tbody>
+        </table>
+      )
+    }
+  }
+
+
+  return (
+    <div className="App">
+      <LoginContainer></LoginContainer>
       <div className="row justify-content-center">
         <div className="col-md-5">
           
           <input type="text" placeholder="Enter task..." className="form-control" 
-          value={taskName} onChange={(e) => {setTaskName(e.target.value)}}
+          value={taskName} onChange={updateTaskName}
           />
           <button className="btn btn-primary" onClick={addTask}>ADD</button>
 
-          <table className="table table-success table-striped">
-            <tbody>
-              {taskList.map(
-                (task, index) => (
-                  <tr key={index}>
-                    <td>                      
-                      <input type="checkbox" id={`check-${index}`} onChange={handleCheckBoxClick} checked={task.done}></input>
-                    </td>
-                    <td>{index+1}</td>
-                    <td>{task.name}</td>
-                    <td><i class="far fa-trash-alt" onClick={() => deleteTask(index)}></i></td>
-                  </tr>
-                )
-              )}
-              </tbody>
-          </table>
+          <TaskTable></TaskTable>
+          
         </div>
       </div>
     </div>
