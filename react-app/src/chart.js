@@ -33,10 +33,13 @@ function ChartistLineGraph() {
       };
     
 
+    const moreStyling = {
+        padding: '4em'
+    }  
     return (
       <div className="ChartistLineGraph chartLimiter">
         {/* <ChartistGraph data={hardCodedData} options={options} type='Line' /> */}
-        <img src={chartImage}></img>
+        <img src={chartImage} style={moreStyling}></img>
       </div>
     )
   }
