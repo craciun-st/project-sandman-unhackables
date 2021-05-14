@@ -1,0 +1,33 @@
+@media screen and (max-width: 400px) {
+    .chartLimiter {
+        width: 76px;
+        max-width: 112px;
+    }
+    
+    img {
+        width: 224px;
+    }
+}
+
+
+@media screen and (max-width: 800px) and (min-width: 401px) {
+    .chartLimiter {
+        width: 152px;
+        max-width: 224px;
+    }
+    
+    img {
+        width: 376px;
+    }
+}
+
+@media screen and (max-width: 1600px) and (min-width: 801px) {
+    .chartLimiter {
+        width: 300px;
+        max-width: 452px;
+    }
+    
+    img {
+        width: 452px;
+    }
+}
