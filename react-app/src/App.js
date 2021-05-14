@@ -77,9 +77,9 @@ function App() {
     render() {
       return(
         <div className="login-container">
-        You are logged in as <span className="user-name">
+        You are logged in as <a className="user-name" href="/profile">
           {userName}
-          </span>
+          </a>
       </div>
       )
     }
