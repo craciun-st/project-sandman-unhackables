@@ -18,11 +18,34 @@
 }
 
 
-.ct-chart-bar {
+.ct-chart-line {
     overflow-y: visible;
     overflow-x: visible;
 }
 
+.nameContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  padding-left: 10px;
+}
+
+.userDataContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;    
+  
+    padding-left: 2px;
+}
+
+.profileSuperContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+}
 /* Play with this for zoom  */
 /* img {
   width: 64px;
@@ -30,4 +53,5 @@
   object-fit: cover;
   object-position: left;
 } */
+
 

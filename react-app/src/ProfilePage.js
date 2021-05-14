@@ -7,12 +7,23 @@ import ChartistLineGraph from "./chart";
 function ProfilePage() {
     const userName = 'Developer'    
     return (
-        <div className="ProfilePage">
-            <h2 className="nameContainer">Hello, {userName}</h2>
-            <img src="https://picsum.photos/300/300" className="profilePicDim"></img>
-            <div className="chart-container">
-                <ChartistLineGraph></ChartistLineGraph>
+        <div className="ProfilePage profileSuperContainer">
+            <h2 class="nameContainer">Hello, {userName}</h2>
+            <div className="userDataContainer">
+                
+                <div className="userNameAndPic">                    
+                    <img src="https://picsum.photos/300/300" className="profilePicDim"></img>                    
+                </div>    
+                <div className="chart-container">
+                    <h2 className="dummySpearator"></h2>
+                    <ChartistLineGraph></ChartistLineGraph>
+                </div>
+            
             </div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <a href="/">Back to main page</a>
         </div>
     )
 }
