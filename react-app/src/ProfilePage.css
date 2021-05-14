@@ -1,0 +1,33 @@
+@media screen and (max-width: 400px) {
+    .profilePicDim {
+        width: 64px;
+    }
+}
+
+
+@media screen and (max-width: 800px) and (min-width: 401px) {
+    .profilePicDim {
+        width: 132px;
+    }
+}
+
+@media screen and (max-width: 1600px) and (min-width: 801px) {
+    .profilePicDim {
+        width: 268px;
+    }
+}
+
+
+.ct-chart-bar {
+    overflow-y: visible;
+    overflow-x: visible;
+}
+
+/* Play with this for zoom  */
+/* img {
+  width: 64px;
+  height: 100%
+  object-fit: cover;
+  object-position: left;
+} */
+
