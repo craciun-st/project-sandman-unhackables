@@ -29,6 +29,7 @@ public class DatabaseInit implements ApplicationRunner {
         User admin = new User(null, "Admin");
         Task testTask = new Task(null,"Finish homework");
         testTask.setUserOwner(admin);
+        admin.addTask(testTask);
         try {
             entityManager.persist(admin);
             entityManager.persist(testTask);

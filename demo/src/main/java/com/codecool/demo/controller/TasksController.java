@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @RestController
 public class TasksController {
@@ -22,12 +23,7 @@ public class TasksController {
     @Autowired
     EntityManager dbEntityManager;
 
-//    UserRepo supplier;
-//
-//    @Autowired
-//    public TasksController(UserRepo supplier) {
-//        this.supplier = supplier;
-//    }
+
 
     @GetMapping("/api/tasks") //   /tasks/?user=2422
     public List<Task> getAllTasks(
@@ -37,19 +33,19 @@ public class TasksController {
 
     ) {
         Long parsedId = Long.parseLong(valueForUser);
-//        Iterable<User> newUsers = supplier.findAll();
-        Optional<User> maybeUser = mockUserSupplier.getAll().stream()
-                .filter(user -> user.getId() == parsedId)
-                .findFirst();
-//        Optional<User> maybeUser = Optional.empty();
-//        for (User user : newUsers) {
-//            if (user.getId() == parsedId) {
-//                maybeUser = Optional.of(user);
-//            }
-//        }
+        String queryString = "select obj from User as obj where obj.id = :parsedIdKey";
+        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
 
-        return maybeUser.orElse(mockUserSupplier.getMockUser(parsedId))
-                .getTasks();
+        typedQuery.setParameter("parsedIdKey", parsedId);
+        Optional<User> maybeUser = typedQuery.getResultStream()
+                .findFirst();
+        List<Task> resultList;
+        try {
+            resultList = maybeUser.orElseThrow(NoSuchElementException::new).getTasks();
+        } catch (NoSuchElementException e) {
+            resultList = Collections.emptyList();
+        }
+        return resultList;
     }
 
     @PostMapping("/api/task")
@@ -62,12 +58,6 @@ public class TasksController {
         Optional<User> maybeUser = mockUserSupplier.getAll().stream()
                 .filter(user -> user.getId() == jsonId)
                 .findFirst();
-//        Optional<User> maybeUser = Optional.empty();
-//        for (User user : supplier.findAll()) {
-//            if (user.getId() == jsonId) {
-//                maybeUser = Optional.of(user);
-//            }
-//        }
         maybeUser.ifPresent(user -> user.addTask(jsonTask));
     }
 
