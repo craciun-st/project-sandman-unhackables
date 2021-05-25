@@ -33,25 +33,24 @@ public class Task extends BaseModel {
 
     }
 
+    public Task(Long id, String name, int importance, String category, boolean isDone, User userOwner) {
+        super(id, name);
+        this.importance = importance;
+        this.category = category;
+        this.isDone = isDone;
+        this.userOwner = userOwner;
+    }
+
+    /**
+     * Creates task without user
+     * @param id
+     * @param name
+     */
     public Task(Long id, String name) {
         super(id, name);
-        this.importance = 5;
+        this.importance = 3;
         this.category = "General";
         this.isDone = false;
-    }
-
-    public Task(Long id, String name, int importance, String category, boolean isDone) {
-        super(id, name);
-        this.importance = importance;
-        this.category = category;
-        this.isDone = isDone;
-    }
-
-    public Task(String name, int importance, String category, boolean isDone) {
-        super(name);
-        this.importance = importance;
-        this.category = category;
-        this.isDone = isDone;
     }
 
     public int getImportance() {
