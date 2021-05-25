@@ -16,26 +16,26 @@ public class MockUserSupplier {
         initMockUsers();
     }
 
-    public User getMockUser(int id) {
+    public User getMockUser(Long id) {
         User someUser = new User(id, "User "+id);
         Random randomizer = new Random();
         for (int i=0; i<4; i++) {
             someUser.addTask(
-                    getRandomTask(randomizer.nextInt())
+                    getRandomTask(randomizer.nextLong())
             );
         }
         return someUser;
     }
 
     public void initMockUsers() {
-        for (int i = 0; i < 10; i++) {
+        for (long i = 0; i < 10; i++) {
             users.add(getMockUser(i));
         }
     }
 
-    public User getUser(int id) {
+    public User getUser(long id) {
         if (id >= 0 && id < this.users.size()) {
-            return users.get(id);
+            return users.get((int) id);
         }
         else {
             return getMockUser(id);
@@ -47,24 +47,22 @@ public class MockUserSupplier {
         return new ArrayList<>(users);
     }
 
-    public Task getRandomTask(int index) {
-        switch (mod(index, 5)) {
-            case 0:
-                return new Task(index, "Studying");
-            case 1:
-                return new Task(index, "Mock Tests");
-            case 2:
-                return new Task(index, "Assignments");
-            case 3:
-                return new Task(index, "Sports");
-            case 4:
-                return new Task(index, "General");
-            default:
-                return null;
+    public Task getRandomTask(Long index) {
+        if (mod(index, 5L) == 0L) {
+            return new Task(index, "Studying");
+        } else if (mod(index, 5L) == 1L) {
+            return new Task(index, "Mock Tests");
+        } else if (mod(index, 5L) == 2L) {
+            return new Task(index, "Assignments");
+        } else if (mod(index, 5L) == 3L) {
+            return new Task(index, "Sports");
+        } else if (mod(index, 5L) == 4L) {
+            return new Task(index, "General");
         }
+        return null;
     }
 
-    public static int mod(int a, int b) {
+    public static Long mod(Long a, Long b) {
         return ((a % b) + b) % b;
     }
 }

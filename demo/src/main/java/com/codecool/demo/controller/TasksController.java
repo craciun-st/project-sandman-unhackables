@@ -8,6 +8,7 @@ import com.codecool.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,9 @@ public class TasksController {
 
     @Autowired
     MockUserSupplier mockUserSupplier;
+
+    @Autowired
+    EntityManager dbEntityManager;
 
 //    UserRepo supplier;
 //
@@ -32,7 +36,7 @@ public class TasksController {
             String valueForUser
 
     ) {
-        int parsedId = Integer.parseInt(valueForUser);
+        Long parsedId = Long.parseLong(valueForUser);
 //        Iterable<User> newUsers = supplier.findAll();
         Optional<User> maybeUser = mockUserSupplier.getAll().stream()
                 .filter(user -> user.getId() == parsedId)
