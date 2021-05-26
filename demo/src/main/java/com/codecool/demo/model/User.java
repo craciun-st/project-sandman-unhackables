@@ -25,6 +25,7 @@ public class User extends BaseModel {
     }
 
     public void addTask(Task task) {
+        task.setUserOwner(this);
         this.tasks.add(task);
     }
 
