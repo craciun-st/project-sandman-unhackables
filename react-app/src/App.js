@@ -10,13 +10,13 @@ import {
 
 import ProfilePage from "./ProfilePage";
 
-const MenuItems = [
+const MenuItems =
   {
     title: 'Home',
     url: '#',
     cName: 'nav-links'
   }
-]
+
 
 var taskData = [
   {
@@ -123,14 +123,15 @@ function App() {
   class Navbar extends React.Component {
     render() { 
       return (
-        <nav className="NavbarItems">
-          <h1 className="nav-logo">Menu </h1>
-          <ul>
-            <li><a className={MenuItems.cName}></a></li>
+        <div className="NavbarItems">
+          <nav>
+            <h1 className="nav-logo">Menu </h1>
+            <ul>
+              <li><a className={MenuItems.cName} href={MenuItems.url}>{MenuItems.title}</a></li>
 
-          </ul>
-        </nav>
-
+            </ul>
+          </nav>
+        </div>
       )
     }
   }
