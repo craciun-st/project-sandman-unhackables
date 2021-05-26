@@ -1,5 +1,7 @@
 package com.codecool.demo.controller;
 
+import com.codecool.demo.controller.status.BadRequestHttpException;
+import com.codecool.demo.controller.status.NotFoundHttpException;
 import com.codecool.demo.dao.MockUserSupplier;
 
 import com.codecool.demo.model.Task;
@@ -32,20 +34,21 @@ public class TasksController {
             String valueForUser
 
     ) {
-        Long parsedId = Long.parseLong(valueForUser);
+        long parsedId;
+        try {
+            parsedId = Long.parseLong(valueForUser);
+        }
+        catch (NumberFormatException e) {
+            throw new BadRequestHttpException();
+        }
         String queryString = "select obj from User as obj where obj.id = :parsedIdKey";
         TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
 
         typedQuery.setParameter("parsedIdKey", parsedId);
-        Optional<User> maybeUser = typedQuery.getResultStream()
-                .findFirst();
-        List<Task> resultList;
-        try {
-            resultList = maybeUser.orElseThrow(NoSuchElementException::new).getTasks();
-        } catch (NoSuchElementException e) {
-            resultList = Collections.emptyList();
-        }
-        return resultList;
+        Optional<List<Task>> maybeResultList = typedQuery.getResultStream()
+                .findFirst()    // Optional<User>
+                .map(User::getTasks);
+        return maybeResultList.orElseThrow(NotFoundHttpException::new);
     }
 
     @PostMapping("/api/task")
