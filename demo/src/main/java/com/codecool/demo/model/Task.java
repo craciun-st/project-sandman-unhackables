@@ -22,6 +22,7 @@ public class Task extends BaseModel {
     @NotNull
     private String category;
 
+    // in JSON, this attribute is displayed as "done"
     @Column(name="done_status")
     private boolean isDone;
 

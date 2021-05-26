@@ -3,7 +3,6 @@ package com.codecool.demo.controller;
 import com.codecool.demo.controller.status.BadRequestHttpException;
 import com.codecool.demo.controller.status.NotFoundHttpException;
 import com.codecool.demo.model.Task;
-import com.codecool.demo.model.TaskAdder;
 import com.codecool.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,21 +52,23 @@ public class TasksController {
 
     @PostMapping("/api/task")
     @Transactional
-    public void addNewTaskForUser(
+    public void appendNewTasksForUser(
             @RequestBody
-            TaskAdder jsonTaskAdder
+            List<Task> jsonTaskList
     ) {
-        long jsonId = jsonTaskAdder.getUserId();
-        Task jsonTask = jsonTaskAdder.getTask();
-        Task taskToWrite = new Task(null, jsonTask.getName());
+        long userId = 3L;   // gotten from session (when implemented)
         Optional<User> maybeUser = getAllUsers().stream()
-                .filter(user -> user.getId() == jsonId)
+                .filter(user -> user.getId() == userId)
                 .findFirst();
-        maybeUser.ifPresent(user -> {
-            user.addTask(taskToWrite);
-            dbEntityManager.persist(taskToWrite);
-        });
+        for (Task jsonTask : jsonTaskList) {
+            //TODO validate jsonTask with a validator
 
+            maybeUser.ifPresent(user -> {
+                user.addTask(jsonTask);
+                dbEntityManager.persist(jsonTask);
+            });
+
+        }
     }
 
     @PostMapping("/add-task")
