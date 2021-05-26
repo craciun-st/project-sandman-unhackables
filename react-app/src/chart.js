@@ -1,7 +1,7 @@
 import chartImage from './chart_img.png';
 import './chart.css';
 import React from 'react';
-import ChartistGraph from 'react-chartist';
+// import ChartistGraph from 'react-chartist';
 import { useState, useEffect } from 'react';
 
 

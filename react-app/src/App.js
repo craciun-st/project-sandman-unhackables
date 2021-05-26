@@ -10,6 +10,13 @@ import {
 
 import ProfilePage from "./ProfilePage";
 
+const MenuItems = [
+  {
+    title: 'Home',
+    url: '#',
+    cName: 'nav-links'
+  }
+]
 
 var taskData = [
   {
@@ -31,6 +38,11 @@ var taskData = [
       "id": 1045836344,
       "name": "General",
       "done": false
+  },
+  {
+      "id": 1045836344,
+      "name": "Nou",
+      "done": true
   }
 ];
 const userId = 1;
@@ -108,6 +120,21 @@ function App() {
     }
   }
 
+  class Navbar extends React.Component {
+    render() { 
+      return (
+        <nav className="NavbarItems">
+          <h1 className="nav-logo">Menu </h1>
+          <ul>
+            <li><a className={MenuItems.cName}></a></li>
+
+          </ul>
+        </nav>
+
+      )
+    }
+  }
+
 
   return (    
     <div className="App">
@@ -116,6 +143,7 @@ function App() {
           <Route exact path="/" >
 
             {/* === INDEX PAGE === */}
+            <Navbar></Navbar>
             <LoginContainer></LoginContainer>
             <div className="row justify-content-center">
               <div className="col-md-5">
