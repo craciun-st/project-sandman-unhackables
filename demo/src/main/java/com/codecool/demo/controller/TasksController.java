@@ -2,8 +2,6 @@ package com.codecool.demo.controller;
 
 import com.codecool.demo.controller.status.BadRequestHttpException;
 import com.codecool.demo.controller.status.NotFoundHttpException;
-import com.codecool.demo.dao.MockUserSupplier;
-
 import com.codecool.demo.model.Task;
 import com.codecool.demo.model.TaskAdder;
 import com.codecool.demo.model.User;
@@ -11,20 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TasksController {
 
-    @Autowired
-    MockUserSupplier mockUserSupplier;
+
+//    private MockUserSupplier mockUserSupplier;
+    private EntityManager dbEntityManager;
 
     @Autowired
-    EntityManager dbEntityManager;
-
+    public TasksController(EntityManager dbEntityManager) {
+        this.dbEntityManager = dbEntityManager;
+    }
 
 
     @GetMapping("/api/tasks") //   /tasks/?user=2422
@@ -52,16 +52,22 @@ public class TasksController {
     }
 
     @PostMapping("/api/task")
+    @Transactional
     public void addNewTaskForUser(
             @RequestBody
             TaskAdder jsonTaskAdder
     ) {
-        int jsonId = jsonTaskAdder.getUserId();
+        long jsonId = jsonTaskAdder.getUserId();
         Task jsonTask = jsonTaskAdder.getTask();
-        Optional<User> maybeUser = mockUserSupplier.getAll().stream()
+        Task taskToWrite = new Task(null, jsonTask.getName());
+        Optional<User> maybeUser = getAllUsers().stream()
                 .filter(user -> user.getId() == jsonId)
                 .findFirst();
-        maybeUser.ifPresent(user -> user.addTask(jsonTask));
+        maybeUser.ifPresent(user -> {
+            user.addTask(taskToWrite);
+            dbEntityManager.persist(taskToWrite);
+        });
+
     }
 
     @PostMapping("/add-task")
@@ -71,7 +77,15 @@ public class TasksController {
 
             @RequestAttribute
             String taskName
-    ) {
+    ) {}
 
+
+    private List<User> getAllUsers() {
+        String queryString = "select u from User as u";
+        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
+
+        return typedQuery.getResultList();
     }
+
+
 }
