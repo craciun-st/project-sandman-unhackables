@@ -62,6 +62,21 @@ public class MockUserSupplier {
         return null;
     }
 
+    public static Task getRandomTaskWithNullId(Long seed) {
+        if (mod(seed, 5L) == 0L) {
+            return new Task(null, "Studying");
+        } else if (mod(seed, 5L) == 1L) {
+            return new Task(null, "Mock Tests");
+        } else if (mod(seed, 5L) == 2L) {
+            return new Task(null, "Assignments");
+        } else if (mod(seed, 5L) == 3L) {
+            return new Task(null, "Sports");
+        } else if (mod(seed, 5L) == 4L) {
+            return new Task(null, "General");
+        }
+        return null;
+    }
+
     public static Long mod(Long a, Long b) {
         return ((a % b) + b) % b;
     }
