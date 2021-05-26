@@ -1,5 +1,6 @@
 package com.codecool.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Column;
@@ -26,6 +27,7 @@ public class Task extends BaseModel {
 
     @ManyToOne
     @JoinColumn(name="user_id")
+    @JsonBackReference
     private User userOwner;
 
 
