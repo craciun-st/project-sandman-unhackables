@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './App.css';
 import './ProfilePage.css'
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css'
@@ -8,7 +9,7 @@ function ProfilePage() {
     const userName = 'Developer'    
     return (
         <div className="ProfilePage profileSuperContainer">
-            <h2 class="nameContainer">Hello, {userName}</h2>
+            <h2 className="nameContainer">Hello, {userName}</h2>
             <div className="userDataContainer">
                 
                 <div className="userNameAndPic">                    

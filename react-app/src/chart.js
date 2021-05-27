@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import chartImage from './chart_img.png';
 import './chart.css';
 import React from 'react';
