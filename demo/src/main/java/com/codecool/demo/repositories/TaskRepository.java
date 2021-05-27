@@ -1,8 +1,11 @@
 package com.codecool.demo.repositories;
 
 import com.codecool.demo.model.Task;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 
-public interface TaskRepository extends CrudRepository<Task,Long> {
+public interface TaskRepository extends JpaRepository<Task,Long> {
+    List<Task> findTasksByUserOwnerId(Long id);
 }
