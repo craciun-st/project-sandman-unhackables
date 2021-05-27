@@ -2,7 +2,7 @@
 import './App.css';
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css'
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {  
   BrowserRouter as Router,
   Route,
@@ -21,23 +21,24 @@ const MenuItems = [
 
 var taskData = [
   {
-      "id": 1411077732,
-      "name": "Assignments",
-      "done": true
-  },
-  {
-      "id": 507317033,
-      "name": "Sports",
+      "id": 6,
+      "name": "Yet Another Task (YAT)",
+      "importance": 3,
+      "category": "General",
       "done": false
   },
   {
-      "id": 1219644257,
-      "name": "Assignments",
-      "done": true
+      "id": 7,
+      "name": "React scheme",
+      "importance": 3,
+      "category": "General",
+      "done": false
   },
   {
-      "id": 1045836344,
-      "name": "General",
+      "id": 8,
+      "name": "Get some sleep",
+      "importance": 3,
+      "category": "General",
       "done": false
   },
   {
@@ -55,7 +56,25 @@ function App() {
 
   const[taskName, setTaskName] = useState('');
   const[taskList, setTaskList] = useState(taskData);
+  const[canGetTaskList, setCanGetTaskList] = useState(true);
 
+  useEffect(() => {
+    if (canGetTaskList) {fetch('http://localhost:8080/api/tasks?user=3',{
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {
+            'Accept': '*/*'
+        }
+    }).then(response => response.json())
+        .then(data => setTaskList(data))
+        .then(err => err ? console.error("Logging an error: "+err) : null)
+        .then(setCanGetTaskList(false));
+  }    
+    return () => {
+      // setCanDoFetch(false);
+    }
+  })
 
   function addTask() {
     let newList = [...taskList];
