@@ -4,12 +4,15 @@ import com.codecool.demo.controller.status.BadRequestHttpException;
 import com.codecool.demo.controller.status.NotFoundHttpException;
 import com.codecool.demo.model.Task;
 import com.codecool.demo.model.User;
+import com.codecool.demo.repositories.TaskRepository;
+import com.codecool.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +21,19 @@ public class TasksController {
 
 
 //    private MockUserSupplier mockUserSupplier;
-    private EntityManager dbEntityManager;
+//    private EntityManager dbEntityManager;
+    private final UserRepository userRepo;
+    private final TaskRepository taskRepo;
+
+//    @Autowired
+//    public TasksController(EntityManager dbEntityManager) {
+//        this.dbEntityManager = dbEntityManager;
+//    }
 
     @Autowired
-    public TasksController(EntityManager dbEntityManager) {
-        this.dbEntityManager = dbEntityManager;
+    public TasksController(UserRepository userRepo, TaskRepository taskRepo) {
+        this.userRepo = userRepo;
+        this.taskRepo = taskRepo;
     }
 
 
@@ -41,12 +52,14 @@ public class TasksController {
             throw new BadRequestHttpException();
         }
         String queryString = "select obj from User as obj where obj.id = :parsedIdKey";
-        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
+//        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
+//        typedQuery.setParameter("parsedIdKey", parsedId);
 
-        typedQuery.setParameter("parsedIdKey", parsedId);
-        Optional<List<Task>> maybeResultList = typedQuery.getResultStream()
-                .findFirst()    // Optional<User>
-                .map(User::getTasks);
+        Optional<User> maybeUser = userRepo.findById(parsedId);
+//        Optional<List<Task>> maybeResultList = typedQuery.getResultStream()
+//                .findFirst()    // Optional<User>
+//                .map(User::getTasks);
+        Optional<List<Task>> maybeResultList = maybeUser.map(User::getTasks);
         return maybeResultList.orElseThrow(NotFoundHttpException::new);
     }
 
@@ -57,16 +70,19 @@ public class TasksController {
             List<Task> jsonTaskList
     ) {
         long userId = 3L;   // gotten from session (when implemented)
-        Optional<User> maybeUser = getAllUsers().stream()
-                .filter(user -> user.getId() == userId)
-                .findFirst();
+//        Optional<User> maybeUser = getAllUsers().stream()
+//                .filter(user -> user.getId() == userId)
+//                .findFirst();
+        Optional<User> maybeUser = userRepo.findById(userId);
         for (Task jsonTask : jsonTaskList) {
             //TODO validate jsonTask with a validator
 
             maybeUser.ifPresent(user -> {
                 user.addTask(jsonTask);
-                dbEntityManager.persist(jsonTask);
+//                dbEntityManager.persist(jsonTask);
+                taskRepo.save(jsonTask);
             });
+
 
         }
     }
@@ -82,10 +98,15 @@ public class TasksController {
 
 
     private List<User> getAllUsers() {
-        String queryString = "select u from User as u";
-        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
+//        String queryString = "select u from User as u";
+//        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
+//        return typedQuery.getResultList();
+        List<User> resultList = new ArrayList<>();
+        for (User user : userRepo.findAll()) {
+            resultList.add(user);
+        }
 
-        return typedQuery.getResultList();
+        return resultList;
     }
 
 
