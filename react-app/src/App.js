@@ -76,9 +76,26 @@ function App() {
     }
   })
 
+    
+  function createNewTask(someName) {
+    let nameString;
+    if (!(typeof someName === 'string')) {
+      nameString = '';
+    } else {
+      nameString = someName.slice();
+    }
+
+    return {
+      "name": nameString,
+      "importance": 3,
+      "category": "General",
+      "done": false
+    }
+  }
+
   function addTask() {
     let newList = [...taskList];
-    newList.push({"name": taskName, "done": false});
+    newList.push(createNewTask(taskName));
     setTaskList(newList);
     setTaskName('');
   }
@@ -104,6 +121,27 @@ function App() {
     // console.log(newArray[idAsInt]);  // for debug purposes
   }
   
+  async function doPost(url = '', data) { const response = await fetch(url,{
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'omit',
+        headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
+
+    return response;
+  }    
+        
+  function persistToServer() {
+    doPost('http://localhost:8080/api/task', taskList)
+        .then(responseData => console.log(responseData))
+        .then(err => err ? console.error("Error while trying to save Tasks: "+err) : null)
+        // .then(setCanGetTaskList(true));
+  }
+  
 
   class LoginContainer extends React.Component {
     render() {
@@ -118,6 +156,7 @@ function App() {
   }
 
   class TaskTable extends React.Component {
+    
     render() {
       return(
         <table className="table table-success table-striped">
@@ -130,7 +169,7 @@ function App() {
                   </td>
                   <td>{index+1}</td>
                   <td>{task.name}</td>
-                  <td><i class="far fa-trash-alt" onClick={() => deleteTask(index)}></i></td>
+                  <td><i className="far fa-trash-alt" onClick={() => deleteTask(index)}></i></td>
                 </tr>
               )
             )}
@@ -172,6 +211,7 @@ function App() {
                 value={taskName} onChange={updateTaskName}
                 />
                 <button className="btn btn-primary" onClick={addTask}>ADD</button>
+                <button className="btn btn-primary btn-success" onClick={persistToServer}>Save to cloud</button>
 
                 <TaskTable></TaskTable>
                 
