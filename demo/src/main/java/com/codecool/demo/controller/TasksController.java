@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")     // not very safe. configure this to trusted http domains!
 @RestController
 public class TasksController {
 
