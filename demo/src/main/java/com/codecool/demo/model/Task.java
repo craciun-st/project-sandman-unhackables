@@ -46,8 +46,8 @@ public class Task extends BaseModel {
 
     /**
      * Creates task without user
-     * @param id
-     * @param name
+     * @param id designated by database (parameter can be null)
+     * @param name given as parameter
      */
     public Task(Long id, String name) {
         super(id, name);
