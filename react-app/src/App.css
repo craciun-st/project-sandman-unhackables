@@ -105,6 +105,12 @@ input[type="range"] {
   justify-content: space-evenly;
 }
 
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .col-md-5 {
   margin-top: 100px !important;
   

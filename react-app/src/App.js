@@ -15,17 +15,17 @@ const MenuItems = [
   {
     title: 'Home',
     url: '/',
-    cName: 'nav-links'
+    cName: 'nav-link'
   },
   {
     title: 'Events',
     url: '/events',
-    cName: 'nav-links'
+    cName: 'nav-link'
   },
   {
     title: 'Rewards',
     url: '/rewards',
-    cName: 'nav-links'
+    cName: 'nav-link'
   }
 ]
 
@@ -244,15 +244,15 @@ function App() {
     render() { 
       return (
         <div className="NavbarItems">
-          <nav>
-            <h1 className="nav-logo">Menu </h1>
-            <ul>
+          <nav className="navbar navbar-light">
+            {/* <h1 className="nav-logo">Menu </h1> */}
+            <div className="navbar-nav">
               {MenuItems.map(
                 (menuItem, index) => (
-                <li key={index}><a className={menuItem.cName} href={menuItem.url}>{menuItem.title}</a></li>
+                <div key={index}><a className={`nav-item ${menuItem.cName}`} href={menuItem.url}>{menuItem.title}</a></div>
                 )
               )}
-            </ul>
+            </div>
           </nav>
         </div>
       )
@@ -267,8 +267,10 @@ function App() {
           <Route exact path="/" >
 
             {/* === INDEX PAGE === */}
+            <div className="top-bar">
             <Navbar></Navbar>
             <LoginContainer></LoginContainer>
+            </div>
             <div className="row justify-content-center">
               <div className="col-md-5">
                 <div className="inputs-container">
