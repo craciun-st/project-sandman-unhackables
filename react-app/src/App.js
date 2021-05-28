@@ -101,9 +101,13 @@ function App() {
   }
 
   function deleteTask(index) {
+    if (taskList.length <= 1) {
+      setTaskList([]);
+    } else {
     var duplicateArray = [...taskList];
     duplicateArray.splice(index,1);
     setTaskList(duplicateArray);
+  }
   }
 
   function updateTaskName(event) {
