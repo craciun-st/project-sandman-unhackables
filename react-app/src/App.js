@@ -11,12 +11,23 @@ import {
 
 import ProfilePage from "./ProfilePage";
 
-const MenuItems =
+const MenuItems = [
   {
     title: 'Home',
-    url: '#',
+    url: '/',
+    cName: 'nav-links'
+  },
+  {
+    title: 'Events',
+    url: '/events',
+    cName: 'nav-links'
+  },
+  {
+    title: 'Rewards',
+    url: '/rewards',
     cName: 'nav-links'
   }
+]
 
 
 var taskData = [
@@ -236,8 +247,11 @@ function App() {
           <nav>
             <h1 className="nav-logo">Menu </h1>
             <ul>
-              <li><a className={MenuItems.cName} href={MenuItems.url}>{MenuItems.title}</a></li>
-
+              {MenuItems.map(
+                (menuItem, index) => (
+                <li key={index}><a className={menuItem.cName} href={menuItem.url}>{menuItem.title}</a></li>
+                )
+              )}
             </ul>
           </nav>
         </div>
