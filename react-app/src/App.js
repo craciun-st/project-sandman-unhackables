@@ -60,6 +60,7 @@ function App() {
   const[taskList, setTaskList] = useState(taskData);
   const[canGetTaskList, setCanGetTaskList] = useState(false);
   const[taskCategory, setTaskCategory] = useState('');
+  const[importance, setImportance] = useState('3');
 
   useEffect(() => {
     if (canGetTaskList) {fetch('http://localhost:8080/api/tasks?user=3',{
@@ -83,6 +84,7 @@ function App() {
   function createNewTask(taskName, taskCategory) {
     let nameString;
     let categoryString;
+    let importanceInt;
     if (!(typeof taskName === 'string')) {
       nameString = '';
     } else {
@@ -95,10 +97,21 @@ function App() {
       categoryString = taskCategory.slice();
     }
 
+    if (!(typeof importance === 'string')) {
+      if (!(typeof importance === 'number')) {
+        importanceInt = 3;
+      } else {
+        importanceInt = importance
+      }
+    } else {
+
+      importanceInt = parseInt(importance)
+    }
+
 
     return {
       "name": nameString,
-      "importance": 3,
+      "importance": importanceInt,
       "category": categoryString,
       "done": false
     }
@@ -109,6 +122,8 @@ function App() {
     newList.push(createNewTask(taskName, taskCategory));
     setTaskList(newList);
     setTaskName('');
+    setTaskCategory('');
+    setImportance('3');
   }
 
   function deleteTask(index) {
@@ -127,6 +142,10 @@ function App() {
 
   function updateTaskCategory(event) {
     setTaskCategory(event.target.value)
+  }
+
+  function updateImportance(event) {
+    setImportance(event.target.value)
   }
 
   function handleCheckBoxClick(event) {
@@ -237,37 +256,56 @@ function App() {
             <LoginContainer></LoginContainer>
             <div className="row justify-content-center">
               <div className="col-md-5">
-                
-                <input type="text" placeholder="Enter task..." className="form-control" 
-                value={taskName} onChange={updateTaskName}
-                />
-                
-                {/* The input/list can't be extracted into a separate component-function, 
-                as it would lose either focus or link with input */}
-                <input 
-                  list="default-categories" 
-                  id="category-choice" name="category-choice" 
-                  className="form-control form-control-sm"
-                  value={taskCategory}
-                  onChange={updateTaskCategory}
-                  placeholder="Enter task category..."
-                />
-                <datalist id="default-categories">
-                  <option value="General"/>
-                  <option value="Study"/>
-                  <option value="Work"/>
-                  <option value="Exercise"/>
-                  <option value="House chore"/>
-                </datalist>
-                {/* input-list ends here.. */}
+                <div className="inputs-container">
+                    <div className="text-inputs-column">
+                      <input type="text" placeholder="Enter task..." className="form-control" 
+                      value={taskName} onChange={updateTaskName}
+                      />
+                      
+                      {/* The input/list can't be extracted into a separate component-function, 
+                      as it would lose either focus (on typing) or link with input */}
+                      <input 
+                        list="default-categories" 
+                        id="category-choice" name="category-choice" 
+                        className="form-control form-control-sm"
+                        value={taskCategory}
+                        onChange={updateTaskCategory}
+                        placeholder="Enter task category..."
+                      />
+                      <datalist id="default-categories">
+                        <option value="General"/>
+                        <option value="Study"/>
+                        <option value="Work"/>
+                        <option value="Exercise"/>
+                        <option value="House chore"/>
+                      </datalist>
+                      {/* input-list ends here.. */}
+                    </div>
+                    <div className="slider-column">
+                      <input type="range" list="tickmarks" min="1" max="5" step="1" value={importance} onChange={updateImportance}/>
+                      <datalist id="tickmarks">
+                        <option value="1" label="Very minor (1)"></option>
+                        <option value="3" label="Regular task (3)"></option>
+                        <option value="5" label="Very important (5)"></option>
+                      </datalist>
+                    </div>
+                </div>
 
-                <button className="btn btn-primary" onClick={addTask}>ADD</button>
-                <button className="btn btn-primary btn-success" onClick={persistToServer}>Save to cloud</button>
 
+                <div className="buttons-column">   
+                  <button className="btn btn-primary" onClick={addTask}>ADD</button>
+                  <button className="btn btn-primary btn-success" onClick={persistToServer}>Sync <span className="fas fa-sync-alt"></span></button>
+                </div>
+                
                 <TaskTable></TaskTable>
                 
+                
               </div>
+              
+              
+               
             </div>
+            
             {/* === END OF INDEX PAGE === */}
 
             </Route>

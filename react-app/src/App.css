@@ -82,6 +82,29 @@
   padding: 2pt;
 }
 
+.buttons-column {
+  padding: 2px;
+}
+
+input[type="range"] {
+  -webkit-appearance: slider-vertical;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+}
+
+.text-inputs-column {
+  padding: 5px;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
 .col-md-5 {
   margin-top: 100px !important;
   
@@ -93,7 +116,7 @@
 input {
   border: 1px solid black !important;
   display: inline !important;
-  width: 70% !important;
+  /* width: 70% !important; */
 }
 
 button {
