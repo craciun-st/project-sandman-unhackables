@@ -311,6 +311,8 @@ function App() {
             </Route>
 
           <Route path="/profile"><ProfilePage /></Route>
+          <Route path="/events">This would be the events page...</Route>
+          <Route path="/rewards">This would be the rewards page...</Route>
         </Switch>
       </Router>
     </div>
