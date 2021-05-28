@@ -69,7 +69,7 @@ function App() {
 
   const[taskName, setTaskName] = useState('');
   const[taskList, setTaskList] = useState(taskData);
-  const[canGetTaskList, setCanGetTaskList] = useState(false);
+  const[canGetTaskList, setCanGetTaskList] = useState(true);
   const[taskCategory, setTaskCategory] = useState('');
   const[importance, setImportance] = useState('3');
 
@@ -268,8 +268,8 @@ function App() {
 
             {/* === INDEX PAGE === */}
             <div className="top-bar">
-            <Navbar></Navbar>
-            <LoginContainer></LoginContainer>
+              <Navbar></Navbar>
+              <LoginContainer></LoginContainer>
             </div>
             <div className="row justify-content-center">
               <div className="col-md-5">
