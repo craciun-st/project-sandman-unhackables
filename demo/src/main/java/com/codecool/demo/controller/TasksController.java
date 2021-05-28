@@ -1,29 +1,41 @@
 package com.codecool.demo.controller;
 
-import com.codecool.demo.dao.MockUserSupplier;
-
+import com.codecool.demo.controller.status.BadRequestHttpException;
+import com.codecool.demo.controller.status.NotFoundHttpException;
 import com.codecool.demo.model.Task;
-import com.codecool.demo.model.TaskAdder;
 import com.codecool.demo.model.User;
+import com.codecool.demo.repositories.TaskRepository;
+import com.codecool.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class TasksController {
 
-    @Autowired
-    MockUserSupplier mockUserSupplier;
 
-//    UserRepo supplier;
-//
+//    private MockUserSupplier mockUserSupplier;
+//    private EntityManager dbEntityManager;
+    private final UserRepository userRepo;
+    private final TaskRepository taskRepo;
+
 //    @Autowired
-//    public TasksController(UserRepo supplier) {
-//        this.supplier = supplier;
+//    public TasksController(EntityManager dbEntityManager) {
+//        this.dbEntityManager = dbEntityManager;
 //    }
+
+    @Autowired
+    public TasksController(UserRepository userRepo, TaskRepository taskRepo) {
+        this.userRepo = userRepo;
+        this.taskRepo = taskRepo;
+    }
+
 
     @GetMapping("/api/tasks") //   /tasks/?user=2422
     public List<Task> getAllTasks(
@@ -32,39 +44,47 @@ public class TasksController {
             String valueForUser
 
     ) {
-        int parsedId = Integer.parseInt(valueForUser);
-//        Iterable<User> newUsers = supplier.findAll();
-        Optional<User> maybeUser = mockUserSupplier.getAll().stream()
-                .filter(user -> user.getId() == parsedId)
-                .findFirst();
-//        Optional<User> maybeUser = Optional.empty();
-//        for (User user : newUsers) {
-//            if (user.getId() == parsedId) {
-//                maybeUser = Optional.of(user);
-//            }
-//        }
+        long parsedId;
+        try {
+            parsedId = Long.parseLong(valueForUser);
+        }
+        catch (NumberFormatException e) {
+            throw new BadRequestHttpException();
+        }
+        String queryString = "select obj from User as obj where obj.id = :parsedIdKey";
+//        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
+//        typedQuery.setParameter("parsedIdKey", parsedId);
 
-        return maybeUser.orElse(mockUserSupplier.getMockUser(parsedId))
-                .getTasks();
+        Optional<User> maybeUser = userRepo.findById(parsedId);
+//        Optional<List<Task>> maybeResultList = typedQuery.getResultStream()
+//                .findFirst()    // Optional<User>
+//                .map(User::getTasks);
+        Optional<List<Task>> maybeResultList = maybeUser.map(User::getTasks);
+        return maybeResultList.orElseThrow(NotFoundHttpException::new);
     }
 
     @PostMapping("/api/task")
-    public void addNewTaskForUser(
+    @Transactional
+    public void appendNewTasksForUser(
             @RequestBody
-            TaskAdder jsonTaskAdder
+            List<Task> jsonTaskList
     ) {
-        int jsonId = jsonTaskAdder.getUserId();
-        Task jsonTask = jsonTaskAdder.getTask();
-        Optional<User> maybeUser = mockUserSupplier.getAll().stream()
-                .filter(user -> user.getId() == jsonId)
-                .findFirst();
-//        Optional<User> maybeUser = Optional.empty();
-//        for (User user : supplier.findAll()) {
-//            if (user.getId() == jsonId) {
-//                maybeUser = Optional.of(user);
-//            }
-//        }
-        maybeUser.ifPresent(user -> user.addTask(jsonTask));
+        long userId = 3L;   // gotten from session (when implemented)
+//        Optional<User> maybeUser = getAllUsers().stream()
+//                .filter(user -> user.getId() == userId)
+//                .findFirst();
+        Optional<User> maybeUser = userRepo.findById(userId);
+        for (Task jsonTask : jsonTaskList) {
+            //TODO validate jsonTask with a validator
+
+            maybeUser.ifPresent(user -> {
+                user.addTask(jsonTask);
+//                dbEntityManager.persist(jsonTask);
+                taskRepo.save(jsonTask);
+            });
+
+
+        }
     }
 
     @PostMapping("/add-task")
@@ -74,7 +94,20 @@ public class TasksController {
 
             @RequestAttribute
             String taskName
-    ) {
+    ) {}
 
+
+    private List<User> getAllUsers() {
+//        String queryString = "select u from User as u";
+//        TypedQuery<User> typedQuery = dbEntityManager.createQuery(queryString, User.class);
+//        return typedQuery.getResultList();
+        List<User> resultList = new ArrayList<>();
+        for (User user : userRepo.findAll()) {
+            resultList.add(user);
+        }
+
+        return resultList;
     }
+
+
 }
