@@ -44,6 +44,8 @@ var taskData = [
   {
       "id": 1045836344,
       "name": "Nou",
+      "importance": 2,
+      "category": "Testing",
       "done": true
   }
 ];
@@ -56,7 +58,8 @@ function App() {
 
   const[taskName, setTaskName] = useState('');
   const[taskList, setTaskList] = useState(taskData);
-  const[canGetTaskList, setCanGetTaskList] = useState(true);
+  const[canGetTaskList, setCanGetTaskList] = useState(false);
+  const[taskCategory, setTaskCategory] = useState('');
 
   useEffect(() => {
     if (canGetTaskList) {fetch('http://localhost:8080/api/tasks?user=3',{
@@ -77,25 +80,33 @@ function App() {
   })
 
     
-  function createNewTask(someName) {
+  function createNewTask(taskName, taskCategory) {
     let nameString;
-    if (!(typeof someName === 'string')) {
+    let categoryString;
+    if (!(typeof taskName === 'string')) {
       nameString = '';
     } else {
-      nameString = someName.slice();
+      nameString = taskName.slice();
     }
+
+    if (!(typeof taskCategory === 'string')) {
+      categoryString = '';
+    } else {
+      categoryString = taskCategory.slice();
+    }
+
 
     return {
       "name": nameString,
       "importance": 3,
-      "category": "General",
+      "category": categoryString,
       "done": false
     }
   }
 
   function addTask() {
     let newList = [...taskList];
-    newList.push(createNewTask(taskName));
+    newList.push(createNewTask(taskName, taskCategory));
     setTaskList(newList);
     setTaskName('');
   }
@@ -104,14 +115,18 @@ function App() {
     if (taskList.length <= 1) {
       setTaskList([]);
     } else {
-    var duplicateArray = [...taskList];
-    duplicateArray.splice(index,1);
-    setTaskList(duplicateArray);
-  }
+      var duplicateArray = [...taskList];
+      duplicateArray.splice(index,1);
+      setTaskList(duplicateArray);
+    }
   }
 
   function updateTaskName(event) {
     setTaskName(event.target.value)
+  }
+
+  function updateTaskCategory(event) {
+    setTaskCategory(event.target.value)
   }
 
   function handleCheckBoxClick(event) {
@@ -124,7 +139,7 @@ function App() {
     setTaskList(newArray);
     // console.log(newArray[idAsInt]);  // for debug purposes
   }
-  
+
   function colorClassForCategory(someString) {
     if (!(typeof someString === 'string')) {
       return 'color-label-general'
@@ -134,6 +149,7 @@ function App() {
   }
 
 
+  
   async function doPost(url = '', data) { const response = await fetch(url,{
         method: 'POST',
         mode: 'cors',
@@ -209,7 +225,7 @@ function App() {
     }
   }
 
-
+ 
   return (    
     <div className="App">
       <Router>
@@ -225,6 +241,26 @@ function App() {
                 <input type="text" placeholder="Enter task..." className="form-control" 
                 value={taskName} onChange={updateTaskName}
                 />
+                
+                {/* The input/list can't be extracted into a separate component-function, 
+                as it would lose either focus or link with input */}
+                <input 
+                  list="default-categories" 
+                  id="category-choice" name="category-choice" 
+                  className="form-control form-control-sm"
+                  value={taskCategory}
+                  onChange={updateTaskCategory}
+                  placeholder="Enter task category..."
+                />
+                <datalist id="default-categories">
+                  <option value="General"/>
+                  <option value="Study"/>
+                  <option value="Work"/>
+                  <option value="Exercise"/>
+                  <option value="House chore"/>
+                </datalist>
+                {/* input-list ends here.. */}
+
                 <button className="btn btn-primary" onClick={addTask}>ADD</button>
                 <button className="btn btn-primary btn-success" onClick={persistToServer}>Save to cloud</button>
 
