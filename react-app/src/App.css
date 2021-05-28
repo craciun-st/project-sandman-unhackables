@@ -51,6 +51,37 @@
   text-decoration: none;
 }
 
+[class*="color-label-"] {
+  background-color: palegoldenrod;
+}
+
+.color-label-general {
+  background-color: deepskyblue;
+}
+
+.color-label-study {
+  background-color: fuchsia;
+}
+
+.color-label-work {
+  background-color: yellow;
+}
+
+.color-label-exercise {
+  background-color: green;
+}
+
+.color-label-house-chor {
+  background-color: orange;
+}
+
+.category-text {
+  font-size: 9pt;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: hsl(0, 0%, 14%);
+  padding: 2pt;
+}
+
 .col-md-5 {
   margin-top: 100px !important;
   

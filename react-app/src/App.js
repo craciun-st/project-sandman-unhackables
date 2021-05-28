@@ -121,6 +121,15 @@ function App() {
     // console.log(newArray[idAsInt]);  // for debug purposes
   }
   
+  function colorClassForCategory(someString) {
+    if (!(typeof someString === 'string')) {
+      return 'color-label-general'
+    } else {  
+      return `color-label-${someString.toLowerCase().split(' ').join('-').slice(0, Math.min(someString.length, 10))}`;
+    }
+  }
+
+
   async function doPost(url = '', data) { const response = await fetch(url,{
         method: 'POST',
         mode: 'cors',
@@ -139,7 +148,7 @@ function App() {
     doPost('http://localhost:8080/api/task', taskList)
         .then(responseData => console.log(responseData))
         .then(err => err ? console.error("Error while trying to save Tasks: "+err) : null)
-        // .then(setCanGetTaskList(true));
+        .then(setCanGetTaskList(true));
   }
   
 
@@ -168,7 +177,9 @@ function App() {
                     <input type="checkbox" id={`check-${index}`} onChange={handleCheckBoxClick} checked={task.done}></input>
                   </td>
                   <td>{index+1}</td>
+                  <td><div className={`category-text ${colorClassForCategory(task.category)}`}>{task.category}</div></td>
                   <td>{task.name}</td>
+                  <td>{task.importance}</td>
                   <td><i className="far fa-trash-alt" onClick={() => deleteTask(index)}></i></td>
                 </tr>
               )
