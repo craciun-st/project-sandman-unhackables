@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,7 +31,7 @@ public class User extends BaseModel {
     @CollectionTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role_id")
-    private EnumSet<UserRole> roles;
+    private Set<UserRole> roles;
 
     public User() {}
 
@@ -91,11 +92,11 @@ public class User extends BaseModel {
         this.passwordHash = passwordEncoder.encode(plainText);
     }
 
-    public EnumSet<UserRole> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(EnumSet<UserRole> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 
