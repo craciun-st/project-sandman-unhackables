@@ -113,6 +113,11 @@ public class User {
         this.roles.add(role);
     }
 
+    public String getName() {
+        return name;
+    }
 
-
+    public void setName(String name) {
+        this.name = name;
+    }
 }
