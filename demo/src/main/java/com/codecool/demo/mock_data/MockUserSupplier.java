@@ -1,4 +1,4 @@
-package com.codecool.demo.dao;
+package com.codecool.demo.mock_data;
 
 import com.codecool.demo.model.Task;
 import com.codecool.demo.model.User;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Component
+
 public class MockUserSupplier {
     private List<User> users = new ArrayList<>();
 

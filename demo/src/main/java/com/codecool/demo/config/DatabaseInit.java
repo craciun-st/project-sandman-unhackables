@@ -1,17 +1,20 @@
 package com.codecool.demo.config;
 
-import com.codecool.demo.dao.MockUserSupplier;
+
+import com.codecool.demo.mock_data.MockUserSupplier;
+import com.codecool.demo.model.Task;
+import com.codecool.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import com.codecool.demo.model.User;
-import com.codecool.demo.model.Task;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 @Component
 public class DatabaseInit implements ApplicationRunner {
@@ -61,7 +64,8 @@ public class DatabaseInit implements ApplicationRunner {
         initialTasks.add(task6);
         initialTasks.add(task7);
         for (int j = 0; j < 7; j++) {
-            initialTasks.add(MockUserSupplier.getRandomTaskWithNullId(randomizer.nextLong()));
+            initialTasks.add(
+                    MockUserSupplier.getRandomTaskWithNullId(randomizer.nextLong()));
         }
 
         for (int i = 0; i < 4; i++) {
