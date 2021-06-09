@@ -7,14 +7,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User extends BaseModel {
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String name;
 
     @Transient
     public static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -22,9 +25,10 @@ public class User extends BaseModel {
     @OneToMany(mappedBy = "userOwner")
     @JsonManagedReference
     private List<Task> tasks;
+
     private String email;
 
-    @JsonIgnore
+    @JsonIgnore     // if ever user data will be part of a JSON serialization
     private String passwordHash;
 
     @ElementCollection(targetClass = UserRole.class)
@@ -36,26 +40,31 @@ public class User extends BaseModel {
     public User() {}
 
     public User(String name) {
-        super(name);
+        this.name = name;
         this.tasks = new ArrayList<>();
         this.setPasswordHashFromPlainText("123");
         this.email = name + "@test.test";
+        this.roles = new HashSet<>();
         this.roles.add(UserRole.USER);
     }
 
     public User(Long id, String name) {
-        super(id, name);
+        this.id = id;
+        this.name = name;
         this.tasks = new ArrayList<>();
         this.setPasswordHashFromPlainText("123");
         this.email = name + "@test.test";
+        this.roles = new HashSet<>();
         this.roles.add(UserRole.USER);
     }
 
     public User(Long id, String name, String email, String plainTextPassword, UserRole role) {
-        super(id, name);
+        this.id = id;
+        this.name = name;
         this.tasks = new ArrayList<>();
         this.email = email;
         this.setPasswordHashFromPlainText(plainTextPassword);
+        this.roles = new HashSet<>();
         this.roles.add(role);
     }
 
