@@ -20,12 +20,12 @@ import java.io.IOException;
 @Component  // needed! filter is autowired in WebSecurityConfig class
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private OurUserDetailsService userDetailsService;
+    private OurUserDetailsService ourUserDetailsService;
     private JwtUtil jwtUtil;
 
     @Autowired
-    public JwtRequestFilter(OurUserDetailsService userDetailsService, JwtUtil jwtUtil) {
-        this.userDetailsService = userDetailsService;
+    public JwtRequestFilter(OurUserDetailsService ourUserDetailsService, JwtUtil jwtUtil) {
+        this.ourUserDetailsService = ourUserDetailsService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -57,7 +57,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             UserDetails userDetails;
             try {
-                userDetails = this.userDetailsService.loadUserByUsername(username);
+                userDetails = this.ourUserDetailsService.loadUserByUsername(username);
             } catch (UsernameNotFoundException err) {
                 logger.error(err);
                 userDetails = null;
