@@ -48,7 +48,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        int strength = 10;  // 2^strength iterations (supposedly, the nr. of XOR filters in the algorithm)
+                            // (10 is sufficiently hard for current hardware to brute-force)
+        return new BCryptPasswordEncoder(strength, new SecureRandom()); // use a cryptographically secure random nr.
+                                                                        // as the salt
+
+//        return NoOpPasswordEncoder.getInstance();     // to test against errors due to wrong wiring of encoding
     }
 
     @Override
