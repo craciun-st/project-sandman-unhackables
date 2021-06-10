@@ -31,9 +31,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+    // need to set the AuthenticationManager to use ourUserDetailsService
+    // and the DAO auth mechanism
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
+//        auth.userDetailsService(ourUserDetailsService);
+    }
+
     // the AuthenticationManager configured in this class's configure() method is not in the global scope;
     // the Bean below (the bean obtained via the superclass method), however, IS GLOBAL!
-    // it is more of a hack, so that the configureGlobal autowiring below would make sense
+    // it is more of a hack, so that the configureGlobal autowiring above would make sense
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
