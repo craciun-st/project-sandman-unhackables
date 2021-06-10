@@ -53,11 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    // need to set the AuthenticationManager to use ourUserDetailsService
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(ourUserDetailsService);
-    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
