@@ -89,13 +89,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeRequests(
-                        (authCustomizer) -> authCustomizer
-                            .antMatchers("/auth").permitAll()
-                            .anyRequest().authenticated()
-                );
-        http.exceptionHandling()
-                .and()
+            .authorizeRequests()
+                    .antMatchers("/auth").permitAll()
+//                    .anyRequest().authenticated()
+            .and()
+            .exceptionHandling()
+            .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Have the JwtRequestFilter be applied before standard User & Password authentication
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
