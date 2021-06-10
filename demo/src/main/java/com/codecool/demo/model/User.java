@@ -3,6 +3,7 @@ package com.codecool.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.*;
@@ -28,7 +29,7 @@ public class User {
     @JsonIgnore     // if ever user data will be part of a JSON serialization
     private String password;
 
-    @ElementCollection(targetClass = UserRole.class)
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role_id")
