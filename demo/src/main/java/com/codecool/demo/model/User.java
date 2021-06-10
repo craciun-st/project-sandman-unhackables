@@ -3,8 +3,6 @@ package com.codecool.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
@@ -19,8 +17,7 @@ public class User {
 
     private String name;
 
-    @Transient
-    public static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     @OneToMany(mappedBy = "userOwner")
     @JsonManagedReference
@@ -29,7 +26,7 @@ public class User {
     private String email;
 
     @JsonIgnore     // if ever user data will be part of a JSON serialization
-    private String passwordHash;
+    private String password;
 
     @ElementCollection(targetClass = UserRole.class)
     @CollectionTable(name = "user_role",
@@ -42,7 +39,7 @@ public class User {
     public User(String name) {
         this.name = name;
         this.tasks = new ArrayList<>();
-        this.setPasswordHashFromPlainText("123");
+
         this.email = name + "@test.test";
         this.roles = new HashSet<>();
         this.roles.add(UserRole.USER);
@@ -52,18 +49,18 @@ public class User {
         this.id = id;
         this.name = name;
         this.tasks = new ArrayList<>();
-        this.setPasswordHashFromPlainText("123");
+
         this.email = name + "@test.test";
         this.roles = new HashSet<>();
         this.roles.add(UserRole.USER);
     }
 
-    public User(Long id, String name, String email, String plainTextPassword, UserRole role) {
+    public User(Long id, String name, String email, String hashedPassword, UserRole role) {
         this.id = id;
         this.name = name;
         this.tasks = new ArrayList<>();
         this.email = email;
-        this.setPasswordHashFromPlainText(plainTextPassword);
+        this.password = hashedPassword;
         this.roles = new HashSet<>();
         this.roles.add(role);
     }
@@ -89,17 +86,15 @@ public class User {
         this.email = email;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String passwordHash) {
+        this.password = passwordHash;
     }
 
-    public void setPasswordHashFromPlainText(String plainText) {
-        this.passwordHash = passwordEncoder.encode(plainText);
-    }
+
 
     public Set<UserRole> getRoles() {
         return roles;
