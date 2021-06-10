@@ -1,6 +1,5 @@
 package com.codecool.demo.controller;
 
-import com.codecool.demo.controller.status.NotFoundHttpException;
 import com.codecool.demo.model.authentication.AuthRequest;
 import com.codecool.demo.model.authentication.AuthResponse;
 import com.codecool.demo.services.JwtUtil;
@@ -42,7 +41,8 @@ public class AuthenticationController {
 
     @PostMapping(value = "/auth")
     public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody AuthRequest authenticationRequest
+            @RequestBody
+            AuthRequest authenticationRequest
     ) throws Exception {
 
         try {
