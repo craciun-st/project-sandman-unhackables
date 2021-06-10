@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
-import './App.css';
+import '../App.css';
 import './ProfilePage.css'
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css'
 import { React, useState } from "react";
-import ChartistLineGraph from "./chart";
+import ChartistLineGraph from "../components/chart";
 
 function ProfilePage() {
     const userName = 'Developer'    

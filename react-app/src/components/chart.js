@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
-import chartImage from './chart_img.png';
+import chartImage from '../img/chart_img.png';
 import './chart.css';
 import React from 'react';
 // import ChartistGraph from 'react-chartist';
-import { useState, useEffect } from 'react';
 
 
 

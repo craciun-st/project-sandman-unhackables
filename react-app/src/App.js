@@ -5,7 +5,7 @@ import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import ProfilePage from "./ProfilePage";
+import ProfilePage from "./other_pages/ProfilePage";
 
 const MenuItems = [
   {
