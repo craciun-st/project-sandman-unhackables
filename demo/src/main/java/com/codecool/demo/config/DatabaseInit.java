@@ -7,6 +7,7 @@ import com.codecool.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -20,10 +21,12 @@ import java.util.Random;
 public class DatabaseInit implements ApplicationRunner {
     
     private EntityManager entityManager;
-    
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public DatabaseInit(EntityManager entityManager) {
-            this.entityManager = entityManager;
+    public DatabaseInit(EntityManager entityManager, PasswordEncoder passwordEncoder) {
+        this.entityManager = entityManager;
+        this.passwordEncoder = passwordEncoder;
     }
     
     
@@ -89,6 +92,7 @@ public class DatabaseInit implements ApplicationRunner {
 
         try {
             for (User user : initialUsers) {
+                user.setPassword(passwordEncoder.encode("123"));
                 entityManager.persist(user);
             }
             for (Task task : initialTasks) {
