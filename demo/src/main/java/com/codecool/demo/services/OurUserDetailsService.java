@@ -9,9 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OurUserDetailsService implements UserDetailsService {
@@ -36,7 +34,7 @@ public class OurUserDetailsService implements UserDetailsService {
                 .toArray(String[]::new);
         UserDetails result = User
                 .withUsername(ourUser.getName())
-                .password("{bcrypt}"+ourUser.getPasswordHash())
+                .password(ourUser.getPassword())
                 .authorities(ourUserAuthorities)
                 .build();
         return result;
