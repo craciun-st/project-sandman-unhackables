@@ -75,12 +75,19 @@ const loginData = {
 
 let inMemoryJwt = '';
 
+
 function App() {
   const [taskName, setTaskName] = useState("");
   const [taskList, setTaskList] = useState(taskData);
-  const [canGetTaskList, setCanGetTaskList] = useState(true);
+  const [canGetTaskList, setCanGetTaskList] = useState(false);
   const [taskCategory, setTaskCategory] = useState("");
   const [importance, setImportance] = useState("3");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  
+  const { decodedToken, isExpired, reEvaluateToken } = useJwt(inMemoryJwt);
+
 
   useEffect(() => {
     if (canGetTaskList) {
@@ -90,17 +97,18 @@ function App() {
         credentials: "omit",
         headers: {
           Accept: "*/*",
+          Authorization: "Bearer "+inMemoryJwt
         },
       })
-        .then((response) => response.json())
-        .then((data) => setTaskList(data))
+        .then((response) => response.status == 200 ? response.json() : null)
+        .then((data) => (data !== null) ? setTaskList(data) : null)
         .then((err) => (err ? console.error("Logging an error: " + err) : null))
         .then(setCanGetTaskList(false));
     }
     return () => {
-      // setCanDoFetch(false);
+      // setCanGetTaskList(false);
     };
-  });
+  }, []);
 
   function createNewTask(taskName, taskCategory) {
     let nameString;
@@ -194,7 +202,7 @@ function App() {
     const response = await fetch(url, {
       method: "POST",
       mode: "cors",
-      credentials: "omit",
+      credentials: "same-origin",
       headers: {
         Accept: "*/*",
         "Content-Type": "application/json",
@@ -205,14 +213,67 @@ function App() {
     return response;
   }
 
+  async function doPostNoCors(url = "", data) {
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      // credentials: "omit",
+      headers: {
+        Accept: "*/*",
+        // "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    return response;
+  }
+
   function persistToServer() {
     doPost("http://localhost:8080/api/task", taskList)
       .then((responseData) => console.log(responseData))
-      .then((err) =>
-        err ? console.error("Error while trying to save Tasks: " + err) : null
+      .catch((err) =>
+        console.error("Error while trying to save Tasks: " + err.message)
       )
       .then(setCanGetTaskList(true));
   }
+
+  function handleLoginClick() {
+    doPost("http://localhost:8080/auth", loginData)
+      .then((response) => { if (!response.ok) {
+            throw new Error('Request failed with response status: '+response.status)
+          }
+          return response.json()
+        }
+      )
+      .then((data) => setJwtAndOtherDependencies(data))
+      .catch((err) => {console.error('Failed to login: '+ err.message)})
+  }
+
+  function handleLogoutClick() {
+    inMemoryJwt = null;
+    console.log(inMemoryJwt)    
+    setIsLoggedIn(false);
+  }
+
+  function setJwtAndOtherDependencies(data) {
+    console.log(data)     
+    inMemoryJwt = data.jwt;
+    
+    reEvaluateToken(inMemoryJwt);
+    setIsLoggedIn(true);
+    setCanGetTaskList(true);
+    this.forceUpdate();
+  }
+
+  
+
+
+  
+
+  
+
+
+  
 
   class LoginContainer extends React.Component {
     render() {
@@ -230,6 +291,7 @@ function App() {
   }
 
   class TaskTable extends React.Component {
+    
     render() {
       return (
         <table className="table table-success table-striped">
@@ -375,7 +437,7 @@ function App() {
           </Route>
 
           <Route path="/profile">
-            <ProfilePage />
+            <ProfilePage userName={(decodedToken !== null && decodedToken.sub && !isExpired) ? decodedToken.sub : null}/>
           </Route>
           <Route path="/events">This would be the events page...</Route>
           <Route path="/rewards">This would be the rewards page...</Route>
