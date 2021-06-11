@@ -27,3 +27,6 @@ yarn-error.log*
 
 # Extra files
 *.py
+
+# Test page for playing around from scratch
+/src/other_pages/TestPage.js
