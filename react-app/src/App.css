@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: #9900ff;
+  
 }
 
 .App-logo {
@@ -91,18 +93,22 @@ input[type="range"] {
 }
 
 .inputs-container {
+  margin-top: 80px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   
 }
 
-.text-inputs-column {
-  padding: 5px;
-  width: 50vw;
+.text-inputs-column input {
+  border: 2px solid #f0f0f0 !important;
+  padding: 6px !important;
+  margin: 10px !important;
+  width: 80% !important;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  
 }
 
 .top-bar {
@@ -128,3 +134,23 @@ input {
 button {
   margin-left: 20px !important;
 }
+
+.container {
+  background-color: #fff;
+  display: block;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  width: 400px;
+  max-width: 95%;
+
+}
+
+.btn {
+  width: 70%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
+
+
