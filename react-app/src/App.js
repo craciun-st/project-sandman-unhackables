@@ -3,9 +3,20 @@ import "./App.css";
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { useJwt } from "react-jwt";
 
+
+// pages
 import ProfilePage from "./other_pages/ProfilePage";
+
+
+
+// components
+import LoginButton from './components/LoginButton';
+import LogoutButton from './components/LogoutButton';
+import NameAndLogStatus from './components/NameAndLogStatus';
 
 const MenuItems = [
   {
@@ -28,35 +39,41 @@ const MenuItems = [
 var taskData = [
   {
     id: 6,
-    name: "Yet Another Task (YAT)",
+    name: "[Mock] Yet Another Task (YAT)",
     importance: 3,
     category: "General",
     done: false,
   },
   {
     id: 7,
-    name: "React scheme",
+    name: "[Mock] React scheme",
     importance: 3,
     category: "General",
     done: false,
   },
   {
     id: 8,
-    name: "Get some sleep",
+    name: "[Mock] Get some sleep",
     importance: 3,
     category: "General",
     done: false,
   },
   {
     id: 1045836344,
-    name: "Nou",
+    name: "[Mock] New",
     importance: 2,
     category: "Testing",
     done: true,
   },
 ];
 const userId = 1;
-const userName = "Developer";
+const userName = "Mock User";
+const loginData = {
+  username: "Ionel",
+  password: "123"
+}
+
+let inMemoryJwt = '';
 
 function App() {
   const [taskName, setTaskName] = useState("");
@@ -199,12 +216,14 @@ function App() {
 
   class LoginContainer extends React.Component {
     render() {
+      let localUserName = (decodedToken !== null && decodedToken.sub && !isExpired) ? decodedToken.sub : null;
       return (
         <div className="login-container">
-          You are logged in as{" "}
-          <a className="user-name" href="/profile">
-            {userName}
-          </a>
+          <LoginButton onClick={handleLoginClick} loginStatus={isLoggedIn}></LoginButton>
+          <LogoutButton onClick={handleLogoutClick} loginStatus={isLoggedIn}></LogoutButton>          
+          <NameAndLogStatus 
+            isLoggedIn={isLoggedIn} 
+            userName={localUserName}></NameAndLogStatus>
         </div>
       );
     }
