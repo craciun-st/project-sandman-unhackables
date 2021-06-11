@@ -71,16 +71,25 @@ public class TasksController {
             List<Task> jsonTaskList
     ) {
         long userId = 3L;   // gotten from session (when implemented)
-//        Optional<User> maybeUser = getAllUsers().stream()
-//                .filter(user -> user.getId() == userId)
-//                .findFirst();
+
+        Iterable<Task> presentTasks;
+
         Optional<User> maybeUser = userRepo.findById(userId);
+
+        presentTasks = maybeUser.map(
+                user -> taskRepo.findAllByUserOwner(user))
+                .orElse(new ArrayList<>());
+
+        for (Task presentTask : presentTasks) {
+            taskRepo.delete(presentTask);
+        }
+
         for (Task jsonTask : jsonTaskList) {
             //TODO validate jsonTask with a validator
 
             maybeUser.ifPresent(user -> {
                 user.addTask(jsonTask);
-//                dbEntityManager.persist(jsonTask);
+
                 taskRepo.save(jsonTask);
             });
 
