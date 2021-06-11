@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
-import './App.css';
+import '../App.css';
 import './ProfilePage.css'
 import bootstrap from 'bootstrap/dist/css/bootstrap.min.css'
 import { React, useState } from "react";
-import ChartistLineGraph from "./chart";
+import PropTypes from 'prop-types';
+import ChartistLineGraph from "../components/chart";
 
-function ProfilePage() {
-    const userName = 'Developer'    
+function ProfilePage({userName}) {
+       
     return (
         <div className="ProfilePage profileSuperContainer">
             <h2 className="nameContainer">Hello, {userName}</h2>
@@ -27,6 +28,10 @@ function ProfilePage() {
             <a href="/">Back to main page</a>
         </div>
     )
+}
+
+ProfilePage.propTypes = {
+    userName: PropTypes.string
 }
 
 export default ProfilePage;
