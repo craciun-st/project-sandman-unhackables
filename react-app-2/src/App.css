@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.Box {
+  background-color: aquamarine;
+  margin: 20px;
+}
+
+.container.side-menu {
+  width: 20vw;
+}
+
+.container.main {
+  width: 80vw;
+}
+
+.Navbar {
+  margin-top:10px;
+  margin-bottom: 30px;
+  background-color: #b1eaff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
