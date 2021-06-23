@@ -1,0 +1,8 @@
+.AppPageBody{
+    margin-top: 1vh;
+    display: grid;
+    grid-template-columns: 17% 80%;
+    grid-template-rows: 40vh 40vh;
+    row-gap: 2vh;
+    column-gap: 3%;    
+}
