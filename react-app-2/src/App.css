@@ -1,27 +1,35 @@
 .App {
+  /* aligns side and main container */
   text-align: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: row;  
+  
 }
 
 .Box {
-  background-color: aquamarine;
-  margin: 20px;
-}
-
-.container.side-menu {
-  width: 20vw;
+  background-color: #7fffd4;  
 }
 
 .container.main {
-  width: 80vw;
+  /* aligns navbar and rest of boxes together */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
 }
 
+.container.side-menu {
+  background-color: hsla(54, 100%, 50%, 50%);
+  width: 17vw;
+  height: 100vh;
+
+  
+  /* display: none; */
+}
+
+
 .Navbar {
-  margin-top:10px;
-  margin-bottom: 30px;
   background-color: #b1eaff;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  height: 17vh;  
 }
 
