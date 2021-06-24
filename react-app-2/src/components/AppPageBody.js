@@ -16,6 +16,7 @@ const defaultCategories = [
     "Exercise",
     "House chore"
 ]
+
 export default function AppPageBody()  {
 
         const [taskName, setTaskName] = useState("");
@@ -23,6 +24,31 @@ export default function AppPageBody()  {
         const [canGetTaskList, setCanGetTaskList] = useState(false);
         const [taskCategory, setTaskCategory] = useState("");
         const [taskImportance, setTaskImportance] = useState("3");
+
+        function mappedUpdateTaskName(event) {
+            return updateTaskName(event, setTaskName);
+        }
+
+        function mappedUpdateTaskCategory(event) {
+            return updateTaskCategory(event, setTaskCategory)
+        }
+
+        function mappedAddTask() {
+            let taskMap = {
+                name: taskName,
+                category: taskCategory,
+                importance: taskImportance,
+            }
+            let taskSetterMap = {
+                'setTaskName': setTaskName,
+                'setTaskCategory': setTaskCategory,
+                'setTaskImportance': setTaskImportance,
+                'setTaskList': setTaskList
+            }
+            return addTask(taskList, taskMap, taskSetterMap)
+        }
+
+        
 
         return (
             <div className="AppPageBody">
@@ -40,4 +66,3 @@ export default function AppPageBody()  {
             </div>
         )
     }
-}
