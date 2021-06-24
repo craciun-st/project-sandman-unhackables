@@ -1,0 +1,29 @@
+.task-importance {
+    font-size: small;
+    color:rgb(76, 167, 67)
+}
+
+
+.btn-outline-primary {
+    border-color: rgb(76, 167, 67);
+}
+/*
+.btn-outline-primary:hover {
+    background:  rgb(76, 167, 67) !important;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.btn-outline-primary:focus {    
+    border-color: rgba(76, 167, 67,0.5) !important;
+    outline: none;
+    box-shadow: none !important;
+ }
+
+.btn-outline-primary:active {
+    border-color: rgba(76, 167, 67,0.5) !important;
+    background: rgb(76, 167, 67) !important;
+    outline: none;
+    box-shadow: none !important;
+}
+*/
