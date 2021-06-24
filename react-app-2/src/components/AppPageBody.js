@@ -10,7 +10,8 @@ export default class AppPageBody extends Component {
         return (
             <div className="AppPageBody">
                 <Box2/>
-                <Box3/>
+                <InputTaskBox 
+                />
                 <Box4/>
                 <TaskContainer/>
             </div>

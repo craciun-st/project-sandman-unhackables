@@ -6,8 +6,7 @@ import TaskTable from './TaskTable'
 export default class TaskContainer extends Component {
     render() {
         return (
-            <div className="TaskContainer">
-                <InputTaskBox/>
+            <div className="TaskContainer">                
                 <TaskTable/>            
             </div>
         )
