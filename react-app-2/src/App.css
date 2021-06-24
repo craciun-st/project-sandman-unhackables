@@ -22,9 +22,9 @@
   background-color: hsla(54, 100%, 50%, 50%);
   width: 17vw;
   height: 100vh;
-
-  
-  /* display: none; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
