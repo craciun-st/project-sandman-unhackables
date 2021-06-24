@@ -16,8 +16,8 @@ export default class InputTaskCategory extends Component {
                         
                 <datalist id="default-categories">
                     {this.props.defaultCategories.map(
-                        (category) => (
-                            <option value={category} />
+                        (category, index) => (
+                            <option value={category} key={index}/>
                         )
                     )}
                 </datalist>
