@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './LogoImage.css'
 
 export default class LogoImage extends Component {
     render() {
