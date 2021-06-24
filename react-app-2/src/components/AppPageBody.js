@@ -1,10 +1,10 @@
 import './AppPageBody.css'
 import React, { Component, useState, useEffect } from 'react'
-import TaskTable from './TaskTable'
+import TaskTable from './task/TaskTable'
 import Box2 from './Box2'
 import Box3 from './Box3'
 import Box4 from './Box4'
-import InputTaskBox from './InputTaskBox'
+import InputTaskBox from './task/InputTaskBox'
 import { updateTaskName, updateTaskCategory, addTask } from '../util/taskStateFunctions'
 
 const taskData = [];

@@ -1,6 +1,6 @@
 import './TaskTable.css'
 import React, { Component } from 'react'
-import { colorClassForCategory } from '../util/cssHelperFunctions'
+import { colorClassForCategory } from '../../util/cssHelperFunctions'
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 
 export default class TaskTable extends Component {
