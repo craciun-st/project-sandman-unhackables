@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import InputTaskName from './InputTaskName'
 import AddTaskButton from './AddTaskButton'
 import InputTaskCategory from './InputTaskCategory'
+import TaskImportanceSelector from './TaskImportanceSelector'
 
 
 export class InputTaskBox extends Component {
@@ -16,6 +17,8 @@ export class InputTaskBox extends Component {
                         updateTaskCategory={this.props.updateTaskCategory}
                         defaultCategories={this.props.defaultCategories}
                     />
+                    <TaskImportanceSelector
+                        updateImportance={this.props.updateImportance}/>
                 </div>
                 <div className="itb-side-container">
                     <AddTaskButton addTask={this.props.onAddTaskClick}/>
