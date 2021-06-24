@@ -1,6 +1,6 @@
 import './AppPageBody.css'
 import React, { Component, useState, useEffect } from 'react'
-import TaskContainer from './TaskContainer'
+import TaskTable from './TaskTable'
 import Box2 from './Box2'
 import Box3 from './Box3'
 import Box4 from './Box4'
@@ -48,7 +48,30 @@ export default function AppPageBody()  {
             return addTask(taskList, taskMap, taskSetterMap)
         }
 
+        function handleCheckBoxClick(event) {
+            let checkedState = event.target.checked;
         
+            let idString = `${event.target.id}`.slice(6);
+            let idAsInt = parseInt(idString);
+            var newArray = [...taskList];
+            newArray[idAsInt].done = checkedState;
+            setTaskList(newArray);
+            // console.log(newArray[idAsInt]);  // for debug purposes
+          }
+
+        function deleteTask(index) {
+            if (taskList.length <= 1) {
+                setTaskList([]);
+            } else {
+                var duplicateArray = [...taskList];
+                duplicateArray.splice(index, 1);
+                setTaskList(duplicateArray);
+            }
+        }
+        
+        function updateImportance(event) {
+            setTaskImportance(parseInt(event.target.dataset.value))
+        }
 
         return (
             <div className="AppPageBody">
@@ -59,10 +82,15 @@ export default function AppPageBody()  {
                     taskCategory={taskCategory}
                     updateTaskCategory={mappedUpdateTaskCategory} 
                     defaultCategories={defaultCategories}
-                    onAddTaskClick={mappedAddTask}                    
+                    onAddTaskClick={mappedAddTask} 
+                    updateImportance={updateImportance}                   
                 />
                 <Box4/>
-                <TaskContainer/>
+                <TaskTable
+                    taskList={taskList}
+                    handleCheckBoxClick = {handleCheckBoxClick}
+                    deleteTask = {deleteTask}
+                    />
             </div>
         )
     }
