@@ -2,7 +2,7 @@
     float: right;
     cursor: pointer;
     margin: 20px;
-    align-items: center;
+    justify-self: start;
 }
 
 .Navbar {
