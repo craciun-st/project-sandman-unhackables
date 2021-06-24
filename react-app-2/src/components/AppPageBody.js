@@ -1,6 +1,6 @@
 import './AppPageBody.css'
 import React, { Component, useState, useEffect } from 'react'
-import TaskContainer from './TaskContainer'
+import TaskTable from './TaskTable'
 import Box2 from './Box2'
 import Box3 from './Box3'
 import Box4 from './Box4'
@@ -69,6 +69,9 @@ export default function AppPageBody()  {
             }
         }
         
+        function updateImportance(event) {
+            setTaskImportance(parseInt(event.target.dataset.value))
+        }
 
         return (
             <div className="AppPageBody">
@@ -79,7 +82,8 @@ export default function AppPageBody()  {
                     taskCategory={taskCategory}
                     updateTaskCategory={mappedUpdateTaskCategory} 
                     defaultCategories={defaultCategories}
-                    onAddTaskClick={mappedAddTask}                    
+                    onAddTaskClick={mappedAddTask} 
+                    updateImportance={updateImportance}                   
                 />
                 <Box4/>
                 <TaskTable
