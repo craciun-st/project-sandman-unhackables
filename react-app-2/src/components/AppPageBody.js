@@ -48,6 +48,26 @@ export default function AppPageBody()  {
             return addTask(taskList, taskMap, taskSetterMap)
         }
 
+        function handleCheckBoxClick(event) {
+            let checkedState = event.target.checked;
+        
+            let idString = `${event.target.id}`.slice(6);
+            let idAsInt = parseInt(idString);
+            var newArray = [...taskList];
+            newArray[idAsInt].done = checkedState;
+            setTaskList(newArray);
+            // console.log(newArray[idAsInt]);  // for debug purposes
+          }
+
+        function deleteTask(index) {
+            if (taskList.length <= 1) {
+                setTaskList([]);
+            } else {
+                var duplicateArray = [...taskList];
+                duplicateArray.splice(index, 1);
+                setTaskList(duplicateArray);
+            }
+        }
         
 
         return (
@@ -62,7 +82,11 @@ export default function AppPageBody()  {
                     onAddTaskClick={mappedAddTask}                    
                 />
                 <Box4/>
-                <TaskContainer/>
+                <TaskTable
+                    taskList={taskList}
+                    handleCheckBoxClick = {handleCheckBoxClick}
+                    deleteTask = {deleteTask}
+                    />
             </div>
         )
     }
