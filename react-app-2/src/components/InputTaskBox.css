@@ -1,13 +1,17 @@
 .input-task-box {
     min-height: 10vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .input-task-box input {
     width: 80%;
     padding: 2px;
 
+}
+
+.itb-wide-container {
+    width: 75%
 }
