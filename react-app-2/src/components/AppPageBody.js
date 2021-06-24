@@ -7,6 +7,15 @@ import Box4 from './Box4'
 import InputTaskBox from './InputTaskBox'
 import { updateTaskName, updateTaskCategory, addTask } from '../util/taskStateFunctions'
 
+const taskData = [];
+
+const defaultCategories = [
+    "General",
+    "Study",
+    "Work",
+    "Exercise",
+    "House chore"
+]
 export default function AppPageBody()  {
 
         const [taskName, setTaskName] = useState("");
