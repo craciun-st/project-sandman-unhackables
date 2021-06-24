@@ -1,0 +1,14 @@
+.logo-image {
+    float: right;
+    cursor: pointer;
+    margin: 20px;
+    align-items: center;
+}
+
+.Navbar {
+  background-color: #b1eaff;
+  height: 17vh;  
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
