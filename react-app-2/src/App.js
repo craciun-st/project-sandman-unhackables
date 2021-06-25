@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import AppPageBody from './components/AppPageBody';
-import LogoImage from './util/resources/LogoImage';
+import LogoImage from './components/LogoImage';
 import LoginButton from './components/authentication/LoginButton';
 import logo from './util/resources/image.png'
 

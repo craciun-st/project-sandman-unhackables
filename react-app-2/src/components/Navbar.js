@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Navbar.css'
-import LogoImage from '../util/resources/LogoImage';
+import LogoImage from './LogoImage';
 
 
 class PrivateNavbar extends Component {
