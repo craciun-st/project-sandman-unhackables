@@ -6,6 +6,8 @@ import LoginButton from './components/authentication/LoginButton';
 import logo from './util/resources/image.png'
 
 
+const loginStatus = true;
+
 function App() {
 
 
@@ -15,9 +17,9 @@ function App() {
       <div className="main-part">
     
         <Navbar
-        logo={logo}/>
+        logo={logo} loginStatus={loginStatus}/>
 
-        <AppPageBody/>
+        <AppPageBody loginStatus={loginStatus}/>
       </div>
 
       <div className="side-menu" id="side-menu">
@@ -25,7 +27,7 @@ function App() {
         <LogoImage
           logo={logo}
           imageWidth="80%"/>
-        <LoginButton/>
+        <LoginButton loginStatus={loginStatus}/>
 
       </div>
     </div>
