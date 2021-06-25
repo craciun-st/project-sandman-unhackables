@@ -4,6 +4,7 @@ import InputTaskName from './InputTaskName'
 import AddTaskButton from './AddTaskButton'
 import InputTaskCategory from './InputTaskCategory'
 import TaskImportanceSelector from './TaskImportanceSelector'
+import SyncTasksWithServerButton from "./SyncTasksWithServerButton";
 
 
 export class InputTaskBox extends Component {
@@ -22,6 +23,7 @@ export class InputTaskBox extends Component {
                 </div>
                 <div className="itb-side-container">
                     <AddTaskButton addTask={this.props.onAddTaskClick}/>
+                    <SyncTasksWithServerButton />
                 </div>
             </div>
         )
