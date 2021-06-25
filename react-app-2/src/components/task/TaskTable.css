@@ -1,4 +1,33 @@
 .TaskTable {
     height: 30vh;
-    background-color: rgba(27, 126, 93, 0.5);
+    /*background-color: rgba(27, 126, 93, 0.5);*/
+}
+
+.text-task-done {
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+[class*="color-label-"] {
+    background-color: palegoldenrod;
+}
+
+.color-label-general {
+    background-color: deepskyblue;
+}
+
+.color-label-study {
+    background-color: fuchsia;
+}
+
+.color-label-work {
+    background-color: yellow;
+}
+
+.color-label-exercise {
+    background-color: green;
+}
+
+.color-label-house-chor {
+    background-color: orange;
 }
