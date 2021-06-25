@@ -21,7 +21,7 @@ const defaultCategories = [
 
 let quoteIndex = Math.trunc(Math.random()*quotesListJson.length);
 
-export default function AppPageBody()  {
+export default function AppPageBody(props)  {
 
         const [taskName, setTaskName] = useState("");
         const [taskList, setTaskList] = useState(taskData);
@@ -87,21 +87,25 @@ export default function AppPageBody()  {
                     author={quotesListJson[quoteIndex].author}
                 />
                 <Box2/>
-                <InputTaskBox 
-                    taskName={taskName} 
-                    updateTaskName={mappedUpdateTaskName}
-                    taskCategory={taskCategory}
-                    updateTaskCategory={mappedUpdateTaskCategory} 
-                    defaultCategories={defaultCategories}
-                    onAddTaskClick={mappedAddTask} 
-                    updateImportance={updateImportance}                   
-                />
-                <Box4/>
-                <TaskTable
-                    taskList={taskList}
-                    handleCheckBoxClick = {handleCheckBoxClick}
-                    deleteTask = {deleteTask}
+                {props.loginStatus ? (
+                    <InputTaskBox
+                        taskName={taskName}
+                        updateTaskName={mappedUpdateTaskName}
+                        taskCategory={taskCategory}
+                        updateTaskCategory={mappedUpdateTaskCategory}
+                        defaultCategories={defaultCategories}
+                        onAddTaskClick={mappedAddTask}
+                        updateImportance={updateImportance}
                     />
+                ) : <div></div> }
+                <Box4/>
+                {props.loginStatus ? (
+                    <TaskTable
+                        taskList={taskList}
+                        handleCheckBoxClick = {handleCheckBoxClick}
+                        deleteTask = {deleteTask}
+                        />
+                ) : <div></div> }
             </div>
         )
     }
