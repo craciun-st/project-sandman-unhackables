@@ -6,6 +6,8 @@ import Box3 from './Box3'
 import Box4 from './Box4'
 import InputTaskBox from './task/InputTaskBox'
 import { updateTaskName, updateTaskCategory, addTask } from '../util/taskStateFunctions'
+import InspirationalQuote from "./InspirationalQuote";
+import {quotesListJson} from "../util/resources/quotes";
 
 const taskData = [];
 
@@ -16,6 +18,8 @@ const defaultCategories = [
     "Exercise",
     "House chore"
 ]
+
+let quoteIndex = Math.trunc(Math.random()*quotesListJson.length);
 
 export default function AppPageBody()  {
 
@@ -73,8 +77,15 @@ export default function AppPageBody()  {
             setTaskImportance(parseInt(event.target.dataset.value))
         }
 
+        // we ought to return an empty div as the first block (the NW corner) in the grid
+        // as it is too small to contain anything useful right now
         return (
             <div className="AppPageBody">
+                <div></div>
+                <InspirationalQuote
+                    quote={quotesListJson[quoteIndex].text}
+                    author={quotesListJson[quoteIndex].author}
+                />
                 <Box2/>
                 <InputTaskBox 
                     taskName={taskName} 
