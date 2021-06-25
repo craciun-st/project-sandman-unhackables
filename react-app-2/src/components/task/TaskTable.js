@@ -6,10 +6,22 @@ import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 export default class TaskTable extends Component {
     render() {
         return (
-            <table className="table table-success table-striped">
+            <table className="table table-success table-striped TaskTable">
+                {this.props.taskList.length > 0 ?
+                    (<thead>
+                        <tr>
+                            <th>Done?</th>
+                            <th>Index</th>
+                            <th>Category</th>
+                            <th>Task To Be Done</th>
+                            <th>Importance</th>
+                            <th>Remove Task?</th>
+                        </tr>
+                    </thead>)
+                    : null}
                 <tbody>
                     {this.props.taskList.map((task, index) => (
-                    <tr key={index}>
+                    <tr key={index} className={task.done ? "text-task-done" : ""}>
                         <td>
                         <input
                             type="checkbox"
