@@ -3,6 +3,17 @@ import './Navbar.css'
 import LogoImage from '../util/resources/LogoImage';
 
 
+class PrivateNavbar extends Component {
+    render() {
+        return (
+            <>
+                <a href="/events">Events</a>
+                <a href="/rewards">Rewards</a>
+            </>
+        )
+    }
+}
+
 export default class Navbar extends Component {
     render() {
         function hideSideBar() {
@@ -17,11 +28,23 @@ export default class Navbar extends Component {
 
         return (
             <div className="Navbar">
+                <div className="left-align-links">
+                    <a href="/">Home</a>
 
-                <LogoImage
-                    onClickFunction={hideSideBar}
-                    logo={this.props.logo}
-                    imageWidth="30vw"/>
+                    { (this.props.loginStatus) ? (
+                            <PrivateNavbar/>
+                        ) : null
+                    }
+                </div>
+
+                <div className="right-align-image">
+                    <LogoImage
+                        onClickFunction={hideSideBar}
+                        logo={this.props.logo}
+                        imageWidth="30vw"
+                    />
+                </div>
+
             </div>
         )
     }
