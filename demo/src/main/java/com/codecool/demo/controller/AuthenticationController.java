@@ -21,55 +21,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Controller
 public class AuthenticationController {
 
-    // global bean set up in WebSecurityConfig
-    private AuthenticationManager authenticationManager;
-
-    private JwtUtil jwtTokenUtil;
-
-    private OurUserDetailsService userDetailsService;
-
-    @Autowired
-    public AuthenticationController(
-            AuthenticationManager authenticationManager,
-            JwtUtil jwtTokenUtil,
-            OurUserDetailsService userDetailsService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.userDetailsService = userDetailsService;
-    }
-
-
-
-
-    @PostMapping(value = "/auth")
-    public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody
-            AuthRequest authenticationRequest
-    ) throws Exception {
-
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            authenticationRequest.getUsername(),
-                            authenticationRequest.getPassword()
-                    )
-            );
-        }
-        catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
-        }
-
-
-        final UserDetails userDetails;
-        try {
-            userDetails = userDetailsService
-                    .loadUserByUsername(authenticationRequest.getUsername());
-        } catch (UsernameNotFoundException err) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        final String jwt = jwtTokenUtil.generateResponseJwt(userDetails);
-
-        return ResponseEntity.ok(new AuthResponse(jwt));
-    }
+//    // global bean set up in WebSecurityConfig
+//    private AuthenticationManager authenticationManager;
+//
+//    private JwtUtil jwtTokenUtil;
+//
+//    private OurUserDetailsService userDetailsService;
+//
+//    @Autowired
+//    public AuthenticationController(
+//            AuthenticationManager authenticationManager,
+//            JwtUtil jwtTokenUtil,
+//            OurUserDetailsService userDetailsService) {
+//        this.authenticationManager = authenticationManager;
+//        this.jwtTokenUtil = jwtTokenUtil;
+//        this.userDetailsService = userDetailsService;
+//    }
+//
+//
+//
+//
+//    @PostMapping(value = "/auth")
+//    public ResponseEntity<?> createAuthenticationToken(
+//            @RequestBody
+//            AuthRequest authenticationRequest
+//    ) throws Exception {
+//
+//        try {
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(
+//                            authenticationRequest.getUsername(),
+//                            authenticationRequest.getPassword()
+//                    )
+//            );
+//        }
+//        catch (BadCredentialsException e) {
+//            throw new Exception("Incorrect username or password", e);
+//        }
+//
+//
+//        final UserDetails userDetails;
+//        try {
+//            userDetails = userDetailsService
+//                    .loadUserByUsername(authenticationRequest.getUsername());
+//        } catch (UsernameNotFoundException err) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//
+//        final String jwt = jwtTokenUtil.generateResponseJwt(userDetails);
+//
+//        return ResponseEntity.ok(new AuthResponse(jwt));
+//    }
 }

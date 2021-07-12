@@ -15,8 +15,8 @@ import java.util.function.Function;
 @Service
 public class JwtUtil {
 
-    @Value("${jwt.secret}")
-    private String secretKey;
+//    @Value("${jwt.secret}")
+    private String secretKey = "THIS SHOULD BE AN ENV VARIABLE AND NOT SET HERE!";
 
     public static final String ISSUER_URI = "ProjSandman@localhost";
 
