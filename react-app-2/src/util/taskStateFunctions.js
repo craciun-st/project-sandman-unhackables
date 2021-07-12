@@ -6,6 +6,10 @@ export function updateTaskCategory(event, setterFunc) {
     setterFunc(event.target.value);
 }
 
+export function updateStateValue(event, setterFunc) {
+    setterFunc(event.target.value);
+}
+
 export function createNewTask(taskName, taskCategory, importance = null) {
     let nameString;
     let categoryString;
