@@ -24,6 +24,9 @@ public class User {
     @JsonManagedReference
     private List<Task> tasks;
 
+    @ManyToMany(mappedBy = "subscribedUsers")
+    private Set<Event> eventsJoined;
+
     private String email;
 
     @JsonIgnore     // if ever user data will be part of a JSON serialization
@@ -54,6 +57,8 @@ public class User {
         this.email = name + "@test.test";
         this.roles = new HashSet<>();
         this.roles.add(UserRole.USER);
+
+        this.eventsJoined = new HashSet<>();
     }
 
     public User(Long id, String name, String email, String hashedPassword, UserRole role) {
@@ -64,6 +69,7 @@ public class User {
         this.password = hashedPassword;
         this.roles = new HashSet<>();
         this.roles.add(role);
+        this.eventsJoined = new HashSet<>();
     }
 
     public void addTask(Task task) {
@@ -115,5 +121,26 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Event> getEventsJoined() {
+        return new HashSet<>(eventsJoined);
+    }
+
+    public void setEventsJoined(Set<Event> eventsJoined) {
+        for (Event event : eventsJoined) {
+            event.addSubscribedUser(this);
+        }
+        this.eventsJoined = eventsJoined;
+    }
+
+    public void joinEvent(Event event) {
+        event.addSubscribedUser(this);
+        this.eventsJoined.add(event);
+    }
+
+    public void leaveEvent(Event event) {
+        event.removeSubscribedUser(this);
+        this.eventsJoined.remove(event);
     }
 }
