@@ -5,6 +5,7 @@ import com.codecool.demo.mock_data.MockUserSupplier;
 import com.codecool.demo.model.Event;
 import com.codecool.demo.model.Task;
 import com.codecool.demo.model.User;
+import com.codecool.demo.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -37,6 +38,7 @@ public class DatabaseInit implements ApplicationRunner {
         User jane = new User(null, "Jane");
         User ionel = new User(null, "Ionel");
         User giovanna = new User(null, "Giovanna");
+        admin.addRole(UserRole.ADMIN);
         List<User> initialUsers = new LinkedList<>(List.of(admin, john, jane, ionel, giovanna));
 
 
