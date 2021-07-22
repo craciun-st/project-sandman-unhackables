@@ -90,7 +90,7 @@ public class DatabaseInit implements ApplicationRunner {
 
         try {
             for (User user : initialUsers) {
-                user.setPassword(passwordEncoder.encode("123"));
+                user.setPassword(("123"));
                 entityManager.persist(user);
             }
             for (Task task : initialTasks) {
