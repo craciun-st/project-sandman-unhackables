@@ -77,6 +77,14 @@ public class Event {
         this.subscribedUsers = subscribedUsers;
     }
 
+    public int getRewardValue() {
+        return rewardValue;
+    }
+
+    public void setRewardValue(int rewardValue) {
+        this.rewardValue = rewardValue;
+    }
+
     public void addSubscribedUser(User user) {
         this.subscribedUsers.add(user);
     }
