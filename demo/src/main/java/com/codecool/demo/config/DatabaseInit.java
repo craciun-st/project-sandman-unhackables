@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Component
 public class DatabaseInit implements ApplicationRunner {
@@ -90,7 +87,7 @@ public class DatabaseInit implements ApplicationRunner {
 
         try {
             for (User user : initialUsers) {
-                user.setPassword(("123"));
+                user.setPassword(("123"));  // we would encode this with Security
                 entityManager.persist(user);
             }
             for (Task task : initialTasks) {
