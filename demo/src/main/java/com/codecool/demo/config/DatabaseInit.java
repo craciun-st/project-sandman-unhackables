@@ -2,6 +2,7 @@ package com.codecool.demo.config;
 
 
 import com.codecool.demo.mock_data.MockUserSupplier;
+import com.codecool.demo.model.Event;
 import com.codecool.demo.model.Task;
 import com.codecool.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +30,17 @@ public class DatabaseInit implements ApplicationRunner {
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
         Random randomizer = new Random();
+
+        // --- Create users --------------------------------
         User admin = new User(null, "Admin");
         User john = new User(null, "John");
         User jane = new User(null, "Jane");
         User ionel = new User(null, "Ionel");
         User giovanna = new User(null, "Giovanna");
-        List<User> initialUsers = new LinkedList<>();
-        initialUsers.add(admin);
-        initialUsers.add(john);
-        initialUsers.add(jane);
-        initialUsers.add(ionel);
-        initialUsers.add(giovanna);
+        List<User> initialUsers = new LinkedList<>(List.of(admin, john, jane, ionel, giovanna));
 
 
+        // --- Create task -------------------------------------------
         Task testTask = new Task(null,"Finish homework");
         admin.addTask(testTask); // when adding a task, its userOwner is also set within this method
         Task task1 = new Task(null, "Study");
@@ -52,20 +51,30 @@ public class DatabaseInit implements ApplicationRunner {
         Task task6 = new Task(null, "Evil mastermind scheme");
         Task task7 = new Task(null, "Get some sleep");
 
-        List<Task> initialTasks = new ArrayList<>();
-        initialTasks.add(testTask);
-        initialTasks.add(task1);
-        initialTasks.add(task2);
-        initialTasks.add(task3);
-        initialTasks.add(task4);
-        initialTasks.add(task5);
-        initialTasks.add(task6);
-        initialTasks.add(task7);
+        List<Task> initialTasks = new ArrayList<>(List.of(testTask, task1, task2, task3, task4, task5, task6, task7));
+
+        // --- Create events ---------------------------------------
+        Event testEvent = new Event(null,"Starter Event","This is a test event...",42);
+        Event event1 = new Event(
+                null,
+                "Start Spring Cleanup",
+                "It's that time of the year. Time for renewal!",
+                100
+        );
+        Event event2 = new Event(
+                null,
+                "Dreaded Study for Final Exam",
+                "It's the final push for the mountain-top! Reach the peak of your academic studies!",
+                2500
+        );
+        List<Event> initialEvents = new LinkedList<>(List.of(testEvent, event1, event2));
+
+
+        // --- Give each user some tasks (Link Tasks with Users) ----------------
         for (int j = 0; j < 7; j++) {
             initialTasks.add(
                     MockUserSupplier.getRandomTaskWithNullId(randomizer.nextLong()));
         }
-
         for (int i = 0; i < 4; i++) {
 
             john.addTask(initialTasks.get(i+1));
@@ -76,15 +85,25 @@ public class DatabaseInit implements ApplicationRunner {
             jane.addTask(initialTasks.get(i+5));
 
         }
-
         for (int i = 0; i < 4; i++) {
             ionel.addTask(initialTasks.get(i+8));
         }
-
         for (int i = 0; i < 3; i++) {
             giovanna.addTask(initialTasks.get(i+12));
         }
 
+        // --- Have Users join some Events (Link Events with Users) ----------
+        for (User user : initialUsers) {
+            user.joinEvent(testEvent);
+        }
+        john.joinEvent(event1);
+        jane.joinEvent(event2);
+        ionel.joinEvent(event1);
+        giovanna.joinEvent(event2);
+        john.joinEvent(event2);
+
+
+        // --- Save objects in Database ---
         try {
             for (User user : initialUsers) {
                 user.setPassword(("123"));  // we would encode this with Security
@@ -92,6 +111,9 @@ public class DatabaseInit implements ApplicationRunner {
             }
             for (Task task : initialTasks) {
                 entityManager.persist(task);
+            }
+            for (Event event : initialEvents) {
+                entityManager.persist(event);
             }
         } catch (Exception e) {
             e.printStackTrace();
