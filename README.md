@@ -2,18 +2,21 @@
 
 ## Story
 
-Project Sandman intends to develop a task manager with a bit of added twist.
+Project Sandman intends to develop a task manager with the intend to add a gamefication paradigm in extension.
 
-Task manager -> accessible layout.  
-Complete tasks and track your progress   
+## Features
+Task manager implemented
+Can keep track of tasks, assign to a category, delete tasks from list.
+
+![Basic skeleton for application layout](./docs/img/Demo.png)
 
 ![Adding a task on the main page](./docs/img/MainPage.png)
 
 ## Planned features
-Gamification paradigm -> personal journey that provides motivation and excitement  
+Add a login feature
+Improve the UI and add a gamefication paradigm - finishing tasks will gain you XP or rewards.
 
 ## Technologies
-- Spring Boot for the API
-- React.js for the front-end
-- JWT (JSON Web Token) for authentication -- see the security-with-jwt branch
-
+- Back-end: Spring Boot
+- Front-end: React.js
+- extra feature JWT (JSON Web Token) for authentication -- available at security-with-jwt branch
